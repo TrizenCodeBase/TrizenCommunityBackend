@@ -16,7 +16,7 @@ async function setupAdmins() {
         // Update admin status for specified emails
         for (const email of adminEmails) {
             const user = await User.findOne({ email: email.toLowerCase() });
-            
+
             if (user) {
                 if (!user.isAdmin) {
                     user.isAdmin = true;
