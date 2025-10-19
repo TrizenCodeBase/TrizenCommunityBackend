@@ -10,7 +10,7 @@ const http = require('http');
 const options = {
     hostname: 'localhost',
     port: 5000,
-    path: '/health',
+    path: '/ping',
     method: 'GET',
     timeout: 10000
 };
@@ -24,16 +24,16 @@ const req = http.request(options, (res) => {
     
     res.on('end', () => {
         try {
-            const health = JSON.parse(data);
-            if (health.status === 'success') {
-                console.log('Health check passed:', health);
+            const response = JSON.parse(data);
+            if (response.status === 'success') {
+                console.log('✅ Health check passed:', response.message);
                 process.exit(0);
             } else {
-                console.error('Health check failed - invalid status:', health);
+                console.error('❌ Health check failed - invalid status:', response);
                 process.exit(1);
             }
         } catch (error) {
-            console.error('Health check failed - invalid JSON:', error.message);
+            console.error('❌ Health check failed - invalid JSON:', error.message);
             console.error('Response data:', data);
             process.exit(1);
         }
@@ -41,12 +41,12 @@ const req = http.request(options, (res) => {
 });
 
 req.on('error', (error) => {
-    console.error('Health check failed - connection error:', error.message);
+    console.error('❌ Health check failed - connection error:', error.message);
     process.exit(1);
 });
 
 req.on('timeout', () => {
-    console.error('Health check failed - timeout');
+    console.error('❌ Health check failed - timeout');
     req.destroy();
     process.exit(1);
 });
