@@ -24,9 +24,9 @@ USER nodejs
 # Expose port (CapRover will use PORT env var)
 EXPOSE 5000
 
-# Health check - using simple ping endpoint
-HEALTHCHECK --interval=30s --timeout=15s --start-period=60s --retries=5 \
-  CMD node healthcheck.js
+# Health check temporarily disabled for debugging
+# HEALTHCHECK --interval=30s --timeout=15s --start-period=60s --retries=5 \
+#   CMD node healthcheck.js
 
 # Start the application
 CMD ["npm", "start"]

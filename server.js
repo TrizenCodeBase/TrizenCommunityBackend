@@ -198,7 +198,18 @@ server.listen(PORT, HOST, () => {
     console.log(`📊 Environment: ${process.env.NODE_ENV}`);
     console.log(`🌐 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
     console.log(`🔍 Health endpoint available at: http://${HOST}:${PORT}/health`);
+    console.log(`🔍 Ping endpoint available at: http://${HOST}:${PORT}/ping`);
     console.log(`⏰ Server started at: ${new Date().toISOString()}`);
+    console.log(`✅ Server is ready to accept connections`);
+});
+
+// Handle server errors
+server.on('error', (error) => {
+    console.error('❌ Server error:', error);
+    if (error.code === 'EADDRINUSE') {
+        console.error(`❌ Port ${PORT} is already in use`);
+    }
+    process.exit(1);
 });
 
 // Graceful shutdown
