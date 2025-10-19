@@ -121,6 +121,15 @@ app.use(passport.session());
 // Configure passport strategies
 require('./config/passport');
 
+// Simple ping endpoint (no database dependency)
+app.get('/ping', (req, res) => {
+    res.status(200).json({
+        status: 'success',
+        message: 'pong',
+        timestamp: new Date().toISOString()
+    });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
     const healthCheck = {
@@ -188,6 +197,8 @@ server.listen(PORT, HOST, () => {
     console.log(`🚀 Server running on ${HOST}:${PORT}`);
     console.log(`📊 Environment: ${process.env.NODE_ENV}`);
     console.log(`🌐 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
+    console.log(`🔍 Health endpoint available at: http://${HOST}:${PORT}/health`);
+    console.log(`⏰ Server started at: ${new Date().toISOString()}`);
 });
 
 // Graceful shutdown
