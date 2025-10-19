@@ -191,8 +191,8 @@ router.get('/:id', optionalAuth, async (req, res) => {
 
 // @desc    Create new event
 // @route   POST /api/events
-// @access  Private
-router.post('/', protect, [
+// @access  Private (Admin only)
+router.post('/', protect, isAdmin, [
     body('title').trim().isLength({ min: 5, max: 100 }).withMessage('Title must be between 5 and 100 characters'),
     body('description').trim().isLength({ min: 20, max: 2000 }).withMessage('Description must be between 20 and 2000 characters'),
     body('category').isIn(['Workshop', 'Conference', 'Meetup', 'Webinar', 'Training', 'Hackathon', 'Networking', 'Other']).withMessage('Invalid category'),
