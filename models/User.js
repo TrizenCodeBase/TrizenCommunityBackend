@@ -18,7 +18,8 @@ const userSchema = new mongoose.Schema({
         match: [
             /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
             'Please provide a valid email'
-        ]
+        ],
+        index: true
     },
     password: {
         type: String,
@@ -31,7 +32,8 @@ const userSchema = new mongoose.Schema({
         sparse: true,
         trim: true,
         lowercase: true,
-        match: [/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores']
+        match: [/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'],
+        index: true
     },
 
     // Profile Information
@@ -198,8 +200,6 @@ const userSchema = new mongoose.Schema({
 });
 
 // Indexes for better performance
-userSchema.index({ email: 1 });
-userSchema.index({ username: 1 });
 userSchema.index({ googleId: 1 });
 userSchema.index({ githubId: 1 });
 userSchema.index({ linkedinId: 1 });

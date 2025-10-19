@@ -9,6 +9,7 @@ const xss = require('xss');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
+const mongoose = require('mongoose');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
 require('dotenv').config();
@@ -122,12 +123,17 @@ require('./config/passport');
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-    res.status(200).json({
+    const healthCheck = {
         status: 'success',
         message: 'Trizen Community API is running',
         timestamp: new Date().toISOString(),
-        environment: process.env.NODE_ENV
-    });
+        environment: process.env.NODE_ENV,
+        uptime: process.uptime(),
+        memory: process.memoryUsage(),
+        database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+    };
+    
+    res.status(200).json(healthCheck);
 });
 
 // API routes
@@ -175,7 +181,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 80;
 const HOST = process.env.HOST || '0.0.0.0'; // Changed from 'localhost' to '0.0.0.0' for Docker
 
 server.listen(PORT, HOST, () => {
@@ -188,8 +194,35 @@ server.listen(PORT, HOST, () => {
 process.on('SIGTERM', () => {
     console.log('SIGTERM received. Shutting down gracefully...');
     server.close(() => {
-        console.log('Process terminated');
+        mongoose.connection.close(false, () => {
+            console.log('MongoDB connection closed.');
+            console.log('Process terminated');
+            process.exit(0);
+        });
     });
+});
+
+process.on('SIGINT', () => {
+    console.log('SIGINT received. Shutting down gracefully...');
+    server.close(() => {
+        mongoose.connection.close(false, () => {
+            console.log('MongoDB connection closed.');
+            console.log('Process terminated');
+            process.exit(0);
+        });
+    });
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+    process.exit(1);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+    console.error('Unhandled Rejection:', err);
+    process.exit(1);
 });
 
 module.exports = app;
