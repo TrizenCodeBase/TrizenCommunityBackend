@@ -22,11 +22,11 @@ RUN chown -R nodejs:nodejs /app
 USER nodejs
 
 # Expose port (CapRover will use PORT env var)
-EXPOSE 80
+EXPOSE 5000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=15s --start-period=60s --retries=5 \
-  CMD node -e "const http = require('http'); const options = { hostname: 'localhost', port: 80, path: '/health', method: 'GET', timeout: 10000 }; const req = http.request(options, (res) => { let data = ''; res.on('data', chunk => data += chunk); res.on('end', () => { try { const health = JSON.parse(data); process.exit(health.status === 'success' ? 0 : 1); } catch(e) { process.exit(1); } }); }); req.on('error', () => process.exit(1)); req.on('timeout', () => { req.destroy(); process.exit(1); }); req.end();"
+  CMD node -e "const http = require('http'); const options = { hostname: 'localhost', port: 5000, path: '/health', method: 'GET', timeout: 10000 }; const req = http.request(options, (res) => { let data = ''; res.on('data', chunk => data += chunk); res.on('end', () => { try { const health = JSON.parse(data); process.exit(health.status === 'success' ? 0 : 1); } catch(e) { process.exit(1); } }); }); req.on('error', () => process.exit(1)); req.on('timeout', () => { req.destroy(); process.exit(1); }); req.end();"
 
 # Start the application
 CMD ["npm", "start"]

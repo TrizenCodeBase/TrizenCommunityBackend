@@ -9,7 +9,7 @@ const http = require('http');
 
 const options = {
     hostname: 'localhost',
-    port: 80,
+    port: 5000,
     path: '/health',
     method: 'GET',
     timeout: 10000

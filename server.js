@@ -190,7 +190,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 // Start server
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || '0.0.0.0'; // Changed from 'localhost' to '0.0.0.0' for Docker
 
 server.listen(PORT, HOST, () => {

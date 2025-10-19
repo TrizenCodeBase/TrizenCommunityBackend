@@ -11,7 +11,7 @@ const testHealthEndpoint = () => {
     return new Promise((resolve, reject) => {
         const options = {
             hostname: 'localhost',
-            port: 80,
+            port: 5000,
             path: '/health',
             method: 'GET',
             timeout: 5000
