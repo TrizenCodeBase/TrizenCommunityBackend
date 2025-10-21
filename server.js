@@ -24,6 +24,8 @@ const eventRoutes = require('./routes/events');
 const contentRoutes = require('./routes/content');
 const adminRoutes = require('./routes/admin');
 const uploadRoutes = require('./routes/upload');
+const contactRoutes = require('./routes/contact');
+const speakerRoutes = require('./routes/speakers');
 
 // Import middleware
 const errorHandler = require('./middleware/errorHandler');
@@ -71,7 +73,7 @@ app.use('/api/', limiter);
 
 // CORS configuration
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+    origin: process.env.CORS_ORIGIN || ["http://localhost:3000", "http://localhost:8081"],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
@@ -137,6 +139,8 @@ app.use('/api/events', eventRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/speakers', speakerRoutes);
 
 // Socket.IO connection handling
 io.on('connection', (socket) => {

@@ -157,7 +157,7 @@ const templates = {
             background-color: #f5f7fa;
           }
           .email-wrapper { 
-            max-width: 680px; 
+            max-width: 800px; 
             margin: 0 auto; 
             padding: 20px; 
           }
@@ -170,7 +170,7 @@ const templates = {
           .header-banner { 
             background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); 
             color: white; 
-            padding: 40px 30px; 
+            padding: 20px 30px; 
             text-align: center; 
           }
           .header-banner h1 { 
@@ -328,8 +328,16 @@ const templates = {
           <div class="email-container">
             <!-- Header Banner -->
             <div class="header-banner">
-              <h1>🎉 Registration Confirmed!</h1>
-              <p>Trizen Community</p>
+              <div style="background: #1e3a8a; padding: 20px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+                <div style="color: #ffffff; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">
+                  <span style="font-size: 40px; margin-right: 10px;">⚡</span>TRIZEN
+                </div>
+                <div style="color: #ffffff; font-size: 14px; margin-top: 5px; opacity: 0.9;">
+                  VENTURES
+                </div>
+              </div>
+              <h1 style="font-size: 20px; margin: 10px 0 5px 0;">🎉 Registration Confirmed!</h1>
+              <p style="font-size: 14px; margin: 0; opacity: 0.9;">Trizen Community</p>
             </div>
             
             <!-- Main Content -->
@@ -407,14 +415,17 @@ const templates = {
             </div>
             
             <!-- Footer -->
-            <div class="footer-section">
-              <p class="footer-text">© 2025 Trizen Community. All rights reserved.</p>
-              <div class="footer-links">
-                <a href="${data.eventUrl}">Event Details</a> | 
-                <a href="${data.supportUrl || '#'}">Support</a> | 
-                <a href="${data.websiteUrl || '#'}">Visit Website</a>
+            <div class="footer-section" style="background: #f5f5f5; padding: 20px; text-align: center; border-radius: 0 0 10px 10px;">
+              <img src="https://via.placeholder.com/400x100/f5f5f5/333333?text=Trizen+Ventures+Contact+Info" alt="Trizen Ventures Contact Information" style="max-width: 100%; height: auto; margin-bottom: 15px;">
+              <div class="footer-links" style="margin-top: 15px;">
+                <a href="${data.eventUrl}" style="color: #2563eb; text-decoration: none; margin: 0 10px; font-size: 13px;">Event Details</a> | 
+                <a href="${data.supportUrl || '#'}" style="color: #2563eb; text-decoration: none; margin: 0 10px; font-size: 13px;">Support</a> | 
+                <a href="${data.websiteUrl || '#'}" style="color: #2563eb; text-decoration: none; margin: 0 10px; font-size: 13px;">Visit Website</a>
               </div>
-              <p class="footer-text" style="margin-top: 15px; font-size: 12px;">
+              <p class="footer-text" style="margin-top: 15px; font-size: 12px; color: #666;">
+                © 2025 Trizen Ventures. All rights reserved.
+              </p>
+              <p class="footer-text" style="margin-top: 10px; font-size: 12px; color: #666;">
                 You're receiving this email because you registered for an event on Trizen Community.
               </p>
             </div>
@@ -472,6 +483,390 @@ const templates = {
           </div>
           <div class="footer">
             <p>© 2025 Trizen Community. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `
+  }),
+
+  contactForm: (data) => ({
+    subject: `New Contact Form Submission: ${data.subject}`,
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Contact Form Submission</title>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+          .container { max-width: 800px; margin: 0 auto; }
+          .header { background: #1e3a8a; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+          .header img { max-width: 200px; height: auto; }
+          .content { background: #f9f9f9; padding: 30px; }
+          .info-box { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 15px; margin: 15px 0; }
+          .message-box { background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 5px; margin: 15px 0; }
+          .footer { background: #f5f5f5; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; color: #666; font-size: 14px; }
+          .footer a { color: #2563eb; text-decoration: none; }
+          .footer a:hover { text-decoration: underline; }
+          .label { font-weight: bold; color: #555; }
+          .value { margin-bottom: 10px; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header" style="background: #1e3a8a; padding: 20px; text-align: center; border-radius: 10px 10px 0 0;">
+            <img src="<div style="background: #1e3a8a; padding: 20px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+  <div style="color: #ffffff; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">
+    <span style="font-size: 40px; margin-right: 10px;">⚡</span>TRIZEN
+  </div>
+  <div style="color: #ffffff; font-size: 14px; margin-top: 5px; opacity: 0.9;">
+    VENTURES
+  </div>
+</div>" alt="Trizen Ventures Logo" style="max-width: 150px; height: auto; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto;">
+            <h2 style="color: white; font-size: 18px; margin: 10px 0 5px 0;">New Contact Form Submission</h2>
+          </div>
+          <div class="content">
+            <div class="info-box">
+              <div class="value"><span class="label">Name:</span> ${data.name}</div>
+              <div class="value"><span class="label">Email:</span> ${data.email}</div>
+              <div class="value"><span class="label">Company:</span> ${data.company}</div>
+              <div class="value"><span class="label">Inquiry Type:</span> ${data.inquiryType}</div>
+              <div class="value"><span class="label">Subject:</span> ${data.subject}</div>
+              <div class="value"><span class="label">Submitted:</span> ${data.timestamp}</div>
+            </div>
+            
+            <h3>Message</h3>
+            <div class="message-box">
+              ${data.message.replace(/\n/g, '<br>')}
+            </div>
+            
+            <div class="info-box">
+              <div class="value"><span class="label">IP Address:</span> ${data.ipAddress}</div>
+              <div class="value"><span class="label">User Agent:</span> ${data.userAgent}</div>
+            </div>
+            
+            <p><strong>Action Required:</strong> Please respond to this inquiry within 24 hours.</p>
+          </div>
+          <div class="footer" style="background: #f5f5f5; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; color: #666; font-size: 14px;">
+            <img src="https://via.placeholder.com/400x100/f5f5f5/333333?text=Trizen+Ventures+Contact+Info" alt="Trizen Ventures Contact Information" style="max-width: 100%; height: auto; margin-bottom: 15px;">
+            <p style="margin-top: 15px; font-size: 12px;">© 2025 Trizen Ventures. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `
+  }),
+
+  contactConfirmation: (data) => ({
+    subject: 'Thank you for contacting Trizen Ventures',
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Thank you for contacting us</title>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+          .container { max-width: 800px; margin: 0 auto; }
+          .header { background: #1e3a8a; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+          .header img { max-width: 200px; height: auto; }
+          .content { background: #f9f9f9; padding: 30px; }
+          .info-box { background: #e8f5e8; border-left: 4px solid #4caf50; padding: 15px; margin: 15px 0; }
+          .footer { background: #f5f5f5; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; color: #666; font-size: 14px; }
+          .footer a { color: #2563eb; text-decoration: none; }
+          .footer a:hover { text-decoration: underline; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header" style="background: #1e3a8a; padding: 20px; text-align: center; border-radius: 10px 10px 0 0;">
+            <img src="<div style="background: #1e3a8a; padding: 20px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+  <div style="color: #ffffff; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">
+    <span style="font-size: 40px; margin-right: 10px;">⚡</span>TRIZEN
+  </div>
+  <div style="color: #ffffff; font-size: 14px; margin-top: 5px; opacity: 0.9;">
+    VENTURES
+  </div>
+</div>" alt="Trizen Ventures Logo" style="max-width: 150px; height: auto; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto;">
+            <h2 style="color: white; font-size: 18px; margin: 10px 0 5px 0;">Thank You for Contacting Us!</h2>
+          </div>
+          <div class="content">
+            <p style="font-size: 16px; margin-bottom: 20px;">Hi ${data.name},</p>
+            <p>Thank you for reaching out to Trizen Ventures. We have received your ${data.inquiryType} inquiry regarding "<strong>${data.subject}</strong>" and will get back to you within 24 hours.</p>
+            
+            <div class="info-box">
+              <h3>What happens next?</h3>
+              <ul>
+                <li>Our team will review your message</li>
+                <li>We'll respond within 24 hours on business days</li>
+                <li>For urgent matters, please call us directly</li>
+              </ul>
+            </div>
+            
+            <p>If you have any immediate questions, feel free to reach out to us at <a href="mailto:${data.supportEmail}">${data.supportEmail}</a>.</p>
+            
+            <p>Best regards,<br>The Trizen Ventures Team</p>
+          </div>
+          <div class="footer">
+            <img src="https://via.placeholder.com/400x100/f5f5f5/333333?text=Trizen+Ventures+Contact+Info" alt="Trizen Ventures Contact Information" style="max-width: 100%; height: auto; margin-bottom: 15px;">
+            <p style="margin-top: 15px; font-size: 12px;">© 2025 Trizen Ventures. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `
+  }),
+
+  speakerApplicationConfirmation: (data) => ({
+    subject: 'Speaker Application Received - Trizen Ventures',
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Speaker Application Confirmation</title>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+          .container { max-width: 800px; margin: 0 auto; }
+          .header { background: #1e3a8a; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+          .content { background: #f9f9f9; padding: 30px; }
+          .info-box { background: #e8f5e8; border-left: 4px solid #4caf50; padding: 15px; margin: 15px 0; }
+          .footer { background: #f5f5f5; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; color: #666; font-size: 14px; }
+          .footer a { color: #2563eb; text-decoration: none; }
+          .footer a:hover { text-decoration: underline; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <div style="background: #1e3a8a; padding: 20px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+              <div style="color: #ffffff; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">
+                <span style="font-size: 40px; margin-right: 10px;">⚡</span>TRIZEN
+              </div>
+              <div style="color: #ffffff; font-size: 14px; margin-top: 5px; opacity: 0.9;">
+                VENTURES
+              </div>
+            </div>
+          </div>
+          <div class="content">
+            <h2>Thank You for Your Speaker Application!</h2>
+            <p>Dear ${data.name},</p>
+            <p>Thank you for your interest in speaking at Trizen Ventures events. We have received your application and are excited about the possibility of having you as a speaker.</p>
+            
+            <div class="info-box">
+              <h3>Application Details</h3>
+              <p><strong>Name:</strong> ${data.name}</p>
+              <p><strong>Organization:</strong> ${data.organization}</p>
+              <p><strong>Applied On:</strong> ${data.appliedAt}</p>
+              <p><strong>Status:</strong> Under Review</p>
+            </div>
+            
+            <h3>What Happens Next?</h3>
+            <ul>
+              <li>Our team will review your application within 3-5 business days</li>
+              <li>We'll assess your expertise and speaking experience</li>
+              <li>You'll receive an email with our decision</li>
+              <li>If approved, we'll discuss event details and logistics</li>
+            </ul>
+            
+            <p>We appreciate your interest in sharing your knowledge with our community. If you have any questions, please don't hesitate to contact us.</p>
+            
+            <p>Best regards,<br>The Trizen Ventures Team</p>
+          </div>
+          <div class="footer">
+            <img src="https://via.placeholder.com/400x100/f5f5f5/333333?text=Trizen+Ventures+Contact+Info" alt="Trizen Ventures Contact Information" style="max-width: 100%; height: auto; margin-bottom: 15px;">
+            <p style="margin-top: 15px; font-size: 12px;">© 2025 Trizen Ventures. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `
+  }),
+
+  speakerApplicationNotification: (data) => ({
+    subject: `New Speaker Application: ${data.name} - Trizen Ventures`,
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Speaker Application</title>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+          .container { max-width: 800px; margin: 0 auto; }
+          .header { background: #1e3a8a; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+          .content { background: #f9f9f9; padding: 30px; }
+          .info-box { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 15px; margin: 15px 0; }
+          .footer { background: #f5f5f5; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; color: #666; font-size: 14px; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <div style="background: #1e3a8a; padding: 20px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+              <div style="color: #ffffff; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">
+                <span style="font-size: 40px; margin-right: 10px;">⚡</span>TRIZEN
+              </div>
+              <div style="color: #ffffff; font-size: 14px; margin-top: 5px; opacity: 0.9;">
+                VENTURES
+              </div>
+            </div>
+          </div>
+          <div class="content">
+            <h2>New Speaker Application Received</h2>
+            
+            <div class="info-box">
+              <h3>Speaker Details</h3>
+              <p><strong>Name:</strong> ${data.name}</p>
+              <p><strong>Email:</strong> ${data.email}</p>
+              <p><strong>Organization:</strong> ${data.organization}</p>
+              <p><strong>Expertise:</strong> ${data.expertise.join(', ')}</p>
+              <p><strong>Applied On:</strong> ${data.appliedAt}</p>
+            </div>
+            
+            <h3>Bio</h3>
+            <p>${data.bio}</p>
+            
+            <p><strong>Action Required:</strong> Please review this application in the admin panel.</p>
+            <p><a href="${data.adminUrl}" style="background: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Review Application</a></p>
+          </div>
+          <div class="footer">
+            <img src="https://via.placeholder.com/400x100/f5f5f5/333333?text=Trizen+Ventures+Contact+Info" alt="Trizen Ventures Contact Information" style="max-width: 100%; height: auto; margin-bottom: 15px;">
+            <p style="margin-top: 15px; font-size: 12px;">© 2025 Trizen Ventures. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `
+  }),
+
+  speakerStatusUpdate: (data) => ({
+    subject: `Speaker Application Update - ${data.status.toUpperCase()} - Trizen Ventures`,
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Speaker Application Update</title>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+          .container { max-width: 800px; margin: 0 auto; }
+          .header { background: #1e3a8a; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+          .content { background: #f9f9f9; padding: 30px; }
+          .status-box { background: ${data.status === 'approved' ? '#e8f5e8' : data.status === 'rejected' ? '#ffebee' : '#fff3e0'}; border-left: 4px solid ${data.status === 'approved' ? '#4caf50' : data.status === 'rejected' ? '#f44336' : '#ff9800'}; padding: 15px; margin: 15px 0; }
+          .footer { background: #f5f5f5; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; color: #666; font-size: 14px; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <div style="background: #1e3a8a; padding: 20px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+              <div style="color: #ffffff; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">
+                <span style="font-size: 40px; margin-right: 10px;">⚡</span>TRIZEN
+              </div>
+              <div style="color: #ffffff; font-size: 14px; margin-top: 5px; opacity: 0.9;">
+                VENTURES
+              </div>
+            </div>
+          </div>
+          <div class="content">
+            <h2>Speaker Application Status Update</h2>
+            <p>Dear ${data.name},</p>
+            
+            <div class="status-box">
+              <h3>Status: ${data.status.toUpperCase()}</h3>
+              <p><strong>Updated On:</strong> ${data.updatedAt}</p>
+              ${data.adminNotes ? `<p><strong>Notes:</strong> ${data.adminNotes}</p>` : ''}
+            </div>
+            
+            ${data.status === 'approved' ? `
+              <h3>Congratulations! 🎉</h3>
+              <p>We are excited to have you as a speaker at our upcoming events. Our team will contact you soon to discuss the details and logistics.</p>
+            ` : data.status === 'rejected' ? `
+              <h3>Thank You for Your Interest</h3>
+              <p>While we appreciate your application, we are unable to proceed with your speaker application at this time. We encourage you to apply again in the future.</p>
+            ` : `
+              <h3>Application Under Review</h3>
+              <p>Your application is still being reviewed. We will notify you once a decision has been made.</p>
+            `}
+            
+            <p>If you have any questions, please contact us at <a href="mailto:${data.supportEmail}">${data.supportEmail}</a>.</p>
+            
+            <p>Best regards,<br>The Trizen Ventures Team</p>
+          </div>
+          <div class="footer">
+            <img src="https://via.placeholder.com/400x100/f5f5f5/333333?text=Trizen+Ventures+Contact+Info" alt="Trizen Ventures Contact Information" style="max-width: 100%; height: auto; margin-bottom: 15px;">
+            <p style="margin-top: 15px; font-size: 12px;">© 2025 Trizen Ventures. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `
+  }),
+
+  speakerInvitation: (data) => ({
+    subject: `Speaker Invitation: ${data.eventTitle} - Trizen Ventures`,
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Speaker Invitation</title>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+          .container { max-width: 800px; margin: 0 auto; }
+          .header { background: #1e3a8a; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+          .content { background: #f9f9f9; padding: 30px; }
+          .event-box { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 15px; margin: 15px 0; }
+          .footer { background: #f5f5f5; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; color: #666; font-size: 14px; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <div style="background: #1e3a8a; padding: 20px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+              <div style="color: #ffffff; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">
+                <span style="font-size: 40px; margin-right: 10px;">⚡</span>TRIZEN
+              </div>
+              <div style="color: #ffffff; font-size: 14px; margin-top: 5px; opacity: 0.9;">
+                VENTURES
+              </div>
+            </div>
+          </div>
+          <div class="content">
+            <h2>Speaker Invitation</h2>
+            <p>Dear ${data.name},</p>
+            <p>We would like to invite you to speak at our upcoming event. Your expertise and experience would be a valuable addition to our event.</p>
+            
+            <div class="event-box">
+              <h3>Event Details</h3>
+              <p><strong>Event:</strong> ${data.eventTitle}</p>
+              <p><strong>Date:</strong> ${data.eventDate}</p>
+              <p><strong>Location:</strong> ${data.eventLocation}</p>
+              <p><strong>Organization:</strong> ${data.organization}</p>
+            </div>
+            
+            ${data.message ? `<p><strong>Personal Message:</strong> ${data.message}</p>` : ''}
+            
+            <h3>Next Steps</h3>
+            <p>To accept this invitation and provide your speaker details, please click the button below:</p>
+            <p><a href="${data.invitationUrl}" style="background: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;">Accept Invitation</a></p>
+            
+            <p>If you have any questions or need more information, please contact us at <a href="mailto:${data.supportEmail}">${data.supportEmail}</a>.</p>
+            
+            <p>We look forward to having you as a speaker!</p>
+            <p>Best regards,<br>The Trizen Ventures Team</p>
+          </div>
+          <div class="footer">
+            <img src="https://via.placeholder.com/400x100/f5f5f5/333333?text=Trizen+Ventures+Contact+Info" alt="Trizen Ventures Contact Information" style="max-width: 100%; height: auto; margin-bottom: 15px;">
+            <p style="margin-top: 15px; font-size: 12px;">© 2025 Trizen Ventures. All rights reserved.</p>
           </div>
         </div>
       </body>

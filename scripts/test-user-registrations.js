@@ -84,3 +84,4 @@ const testUserRegistrations = async () => {
 };
 
 testUserRegistrations();
+

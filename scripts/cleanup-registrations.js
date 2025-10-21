@@ -102,3 +102,4 @@ const cleanupRegistrations = async () => {
 };
 
 cleanupRegistrations();
+

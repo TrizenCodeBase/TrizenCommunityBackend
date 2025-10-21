@@ -48,3 +48,4 @@ async function setupAdmins() {
 
 // Run the script
 setupAdmins();
+
