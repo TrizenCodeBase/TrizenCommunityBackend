@@ -89,7 +89,7 @@ router.post('/apply', [
 
         await speaker.save();
 
-        // Send confirmation email to speaker
+        // Send confirmation email to speaker (optional - don't fail if email fails)
         if (process.env.EMAIL_HOST && process.env.EMAIL_USER && process.env.EMAIL_PASS) {
             try {
                 await sendEmail({
@@ -105,10 +105,13 @@ router.post('/apply', [
                 console.log(`✅ Speaker application confirmation email sent to ${email}`);
             } catch (emailError) {
                 console.error('❌ Failed to send speaker confirmation email:', emailError);
+                // Don't fail the application if email fails
             }
+        } else {
+            console.log('⚠️ Email configuration not set - skipping confirmation email');
         }
 
-        // Send notification to admin
+        // Send notification to admin (optional - don't fail if email fails)
         if (process.env.EMAIL_HOST && process.env.EMAIL_USER && process.env.EMAIL_PASS) {
             try {
                 await sendEmail({
@@ -127,7 +130,10 @@ router.post('/apply', [
                 console.log(`✅ Speaker application notification sent to admin`);
             } catch (emailError) {
                 console.error('❌ Failed to send admin notification:', emailError);
+                // Don't fail the application if email fails
             }
+        } else {
+            console.log('⚠️ Email configuration not set - skipping admin notification');
         }
 
         res.status(201).json({
