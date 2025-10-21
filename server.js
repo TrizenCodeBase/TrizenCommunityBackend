@@ -9,6 +9,7 @@ const xss = require('xss');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
+const mongoose = require('mongoose');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
 require('dotenv').config();
@@ -122,14 +123,28 @@ app.use(passport.session());
 // Configure passport strategies
 require('./config/passport');
 
+// Simple ping endpoint (no database dependency)
+app.get('/ping', (req, res) => {
+    res.status(200).json({
+        status: 'success',
+        message: 'pong',
+        timestamp: new Date().toISOString()
+    });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
-    res.status(200).json({
+    const healthCheck = {
         status: 'success',
         message: 'Trizen Community API is running',
         timestamp: new Date().toISOString(),
-        environment: process.env.NODE_ENV
-    });
+        environment: process.env.NODE_ENV,
+        uptime: process.uptime(),
+        memory: process.memoryUsage(),
+        database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+    };
+    
+    res.status(200).json(healthCheck);
 });
 
 // API routes
@@ -186,14 +201,54 @@ server.listen(PORT, HOST, () => {
     console.log(`🚀 Server running on ${HOST}:${PORT}`);
     console.log(`📊 Environment: ${process.env.NODE_ENV}`);
     console.log(`🌐 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
+    console.log(`🔍 Health endpoint available at: http://${HOST}:${PORT}/health`);
+    console.log(`🔍 Ping endpoint available at: http://${HOST}:${PORT}/ping`);
+    console.log(`⏰ Server started at: ${new Date().toISOString()}`);
+    console.log(`✅ Server is ready to accept connections`);
+});
+
+// Handle server errors
+server.on('error', (error) => {
+    console.error('❌ Server error:', error);
+    if (error.code === 'EADDRINUSE') {
+        console.error(`❌ Port ${PORT} is already in use`);
+    }
+    process.exit(1);
 });
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
     console.log('SIGTERM received. Shutting down gracefully...');
     server.close(() => {
-        console.log('Process terminated');
+        mongoose.connection.close(false, () => {
+            console.log('MongoDB connection closed.');
+            console.log('Process terminated');
+            process.exit(0);
+        });
     });
+});
+
+process.on('SIGINT', () => {
+    console.log('SIGINT received. Shutting down gracefully...');
+    server.close(() => {
+        mongoose.connection.close(false, () => {
+            console.log('MongoDB connection closed.');
+            console.log('Process terminated');
+            process.exit(0);
+        });
+    });
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+    process.exit(1);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+    console.error('Unhandled Rejection:', err);
+    process.exit(1);
 });
 
 module.exports = app;
