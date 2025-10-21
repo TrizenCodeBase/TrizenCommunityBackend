@@ -203,6 +203,10 @@ router.post('/', protect, isAdmin, [
     body('price').optional().isFloat({ min: 0 }).withMessage('Price must be non-negative')
 ], async (req, res) => {
     try {
+        console.log('🔍 Raw request body keys:', Object.keys(req.body));
+        console.log('🔍 Request body speakers type:', typeof req.body.speakers);
+        console.log('🔍 Request body speakers:', req.body.speakers);
+
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({
@@ -216,6 +220,41 @@ router.post('/', protect, isAdmin, [
             ...req.body,
             organizer: req.user._id
         };
+
+        // Ensure speakers data is properly handled
+        if (eventData.speakers && Array.isArray(eventData.speakers)) {
+            eventData.speakers = eventData.speakers.map(speaker => {
+                // Ensure all speaker fields are properly set
+                return {
+                    name: speaker.name || '',
+                    title: speaker.title || '',
+                    company: speaker.company || '',
+                    bio: speaker.bio || '',
+                    image: speaker.image || '',
+                    profilePicture: speaker.profilePicture || '',
+                    avatar: speaker.avatar || '',
+                    socialLinks: {
+                        linkedin: speaker.socialLinks?.linkedin || '',
+                        twitter: speaker.socialLinks?.twitter || '',
+                        website: speaker.socialLinks?.website || ''
+                    }
+                };
+            });
+        }
+
+        console.log('📝 Creating event with data:', {
+            title: eventData.title,
+            speakers: eventData.speakers,
+            speakersCount: eventData.speakers?.length || 0
+        });
+
+        if (eventData.speakers && eventData.speakers.length > 0) {
+            console.log('🎤 First speaker data:', eventData.speakers[0]);
+            console.log('🎤 First speaker image:', eventData.speakers[0].image);
+            console.log('🎤 First speaker image length:', eventData.speakers[0].image?.length);
+        }
+
+        console.log('📦 Raw request body speakers:', req.body.speakers);
 
         // Validate dates
         if (new Date(eventData.startDate) >= new Date(eventData.endDate)) {
@@ -232,8 +271,31 @@ router.post('/', protect, isAdmin, [
             });
         }
 
+        console.log('🔍 Event data before creating Event instance:', JSON.stringify(eventData, null, 2));
+        console.log('🔍 Speakers data type:', typeof eventData.speakers);
+        console.log('🔍 Speakers data length:', eventData.speakers?.length);
+        if (eventData.speakers && eventData.speakers.length > 0) {
+            console.log('🔍 First speaker before Event creation:', eventData.speakers[0]);
+            console.log('🔍 First speaker image length:', eventData.speakers[0].image?.length);
+        }
+
         const event = new Event(eventData);
+        console.log('🔍 Event instance created, speakers:', event.speakers);
+        if (event.speakers && event.speakers.length > 0) {
+            console.log('🔍 First speaker in Event instance:', event.speakers[0]);
+            console.log('🔍 First speaker image in Event instance:', event.speakers[0].image);
+        }
+
         await event.save();
+        console.log('💾 Event saved successfully');
+
+        // Reload the event from database to see what was actually saved
+        const savedEvent = await Event.findById(event._id);
+        console.log('💾 Event reloaded from database with speakers:', savedEvent.speakers);
+        if (savedEvent.speakers && savedEvent.speakers.length > 0) {
+            console.log('💾 First saved speaker from database:', savedEvent.speakers[0]);
+            console.log('💾 First speaker image from database:', savedEvent.speakers[0].image);
+        }
 
         await event.populate('organizer', 'name avatar');
 
@@ -305,6 +367,38 @@ router.put('/:id', protect, [
         }
 
         // Update event
+        console.log('📝 Updating event with data:', {
+            title: req.body.title,
+            speakers: req.body.speakers,
+            speakersCount: req.body.speakers?.length || 0
+        });
+
+        if (req.body.speakers && req.body.speakers.length > 0) {
+            console.log('🎤 First speaker data in update:', req.body.speakers[0]);
+            console.log('🎤 First speaker image in update:', req.body.speakers[0].image);
+            console.log('🎤 First speaker image length in update:', req.body.speakers[0].image?.length);
+        }
+
+        // Ensure speakers data is properly handled for updates
+        if (req.body.speakers && Array.isArray(req.body.speakers)) {
+            req.body.speakers = req.body.speakers.map(speaker => {
+                return {
+                    name: speaker.name || '',
+                    title: speaker.title || '',
+                    company: speaker.company || '',
+                    bio: speaker.bio || '',
+                    image: speaker.image || '',
+                    profilePicture: speaker.profilePicture || '',
+                    avatar: speaker.avatar || '',
+                    socialLinks: {
+                        linkedin: speaker.socialLinks?.linkedin || '',
+                        twitter: speaker.socialLinks?.twitter || '',
+                        website: speaker.socialLinks?.website || ''
+                    }
+                };
+            });
+        }
+
         Object.keys(req.body).forEach(key => {
             if (req.body[key] !== undefined) {
                 event[key] = req.body[key];
@@ -312,6 +406,21 @@ router.put('/:id', protect, [
         });
 
         await event.save();
+
+        console.log('💾 Event updated with speakers:', event.speakers);
+        if (event.speakers && event.speakers.length > 0) {
+            console.log('💾 First updated speaker:', event.speakers[0]);
+            console.log('💾 First updated speaker image:', event.speakers[0].image);
+            console.log('💾 First updated speaker image length:', event.speakers[0].image?.length);
+        }
+
+        // Reload from database to verify
+        const updatedEvent = await Event.findById(event._id);
+        console.log('💾 Event reloaded from database after update:', updatedEvent.speakers);
+        if (updatedEvent.speakers && updatedEvent.speakers.length > 0) {
+            console.log('💾 First speaker from database after update:', updatedEvent.speakers[0]);
+            console.log('💾 First speaker image from database after update:', updatedEvent.speakers[0].image);
+        }
         await event.populate('organizer', 'name avatar');
 
         res.json({

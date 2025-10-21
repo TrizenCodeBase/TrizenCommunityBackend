@@ -50,7 +50,7 @@ const eventSchema = new mongoose.Schema({
     },
     duration: {
         type: Number, // in minutes
-        required: [true, 'Event duration is required']
+        required: false // Can be calculated from start and end dates
     },
 
     // Location Information
@@ -85,6 +85,14 @@ const eventSchema = new mongoose.Schema({
         company: String,
         bio: String,
         avatar: String,
+        image: {
+            type: String,
+            maxlength: [10000000, 'Image data too large'] // 10MB limit
+        },
+        profilePicture: {
+            type: String,
+            maxlength: [10000000, 'Profile picture data too large'] // 10MB limit
+        },
         socialLinks: {
             linkedin: String,
             twitter: String,
@@ -301,13 +309,19 @@ eventSchema.virtual('eventStatus').get(function () {
     return 'completed';
 });
 
-// Pre-save middleware to update current attendees count
+// Pre-save middleware to update current attendees count and calculate duration
 eventSchema.pre('save', function (next) {
     if (this.isModified('currentAttendees')) {
         if (this.currentAttendees > this.maxAttendees) {
             return next(new Error('Current attendees cannot exceed maximum attendees'));
         }
     }
+
+    // Calculate duration if not provided
+    if (!this.duration && this.startDate && this.endDate) {
+        this.duration = Math.round((this.endDate - this.startDate) / (1000 * 60)); // Convert to minutes
+    }
+
     next();
 });
 

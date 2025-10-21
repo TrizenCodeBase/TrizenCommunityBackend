@@ -30,14 +30,7 @@ const templates = {
               <table width="800" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                 <!-- Header with Trizen Logo -->
                 <tr>
-                  <td style="background-color: #1e3a8a; padding: 30px; text-align: center;">
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td align="center" style="color: #ffffff; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">
-                          TRIZEN
-                        </td>
-                      </tr>
-                    </table>
+                  <td style="padding: 25px 20px; text-align: center; border-radius: 8px 8px 0 0; background-color: #2E1F5C; background-image: url('https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'); background-repeat: no-repeat; background-position: center; background-size: 460px auto; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
                   </td>
                 </tr>
                 
@@ -74,6 +67,12 @@ const templates = {
                       </tr>
                       <tr>
                         <td style="padding: 10px 0; border-bottom: 1px solid #e9ecef;">
+                          <strong style="color: #333333; font-family: Arial, sans-serif;">Registration ID:</strong>
+                          <span style="color: #2563eb; font-family: Arial, sans-serif; margin-left: 10px; font-weight: bold;">${data.ticketNumber || 'TRIZEN-' + Date.now().toString().slice(-8)}</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 10px 0; border-bottom: 1px solid #e9ecef;">
                           <strong style="color: #333333; font-family: Arial, sans-serif;">Location:</strong>
                           <span style="color: #666666; font-family: Arial, sans-serif; margin-left: 10px;">${data.eventLocation}</span>
                         </td>
@@ -85,6 +84,19 @@ const templates = {
                         </td>
                       </tr>
                     </table>
+                  </td>
+                </tr>
+                
+                <!-- Ticket Section -->
+                <tr>
+                  <td style="padding: 20px 30px; background-color: #f8f9fa; border-top: 1px solid #e9ecef;">
+                    <div style="background-color: #ffffff; border: 2px solid #2563eb; border-radius: 8px; padding: 20px; text-align: center;">
+                      <h3 style="margin: 0 0 10px 0; color: #2563eb; font-size: 18px; font-family: Arial, sans-serif;">Your Event Ticket</h3>
+                      <div style="background-color: #2563eb; color: #ffffff; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong style="font-size: 16px; font-family: Arial, sans-serif;">Registration ID: ${data.ticketNumber || 'TRIZEN-' + Date.now().toString().slice(-8)}</strong>
+          </div>
+                      <p style="margin: 10px 0 0 0; color: #666666; font-size: 14px; font-family: Arial, sans-serif;">Please keep this ID for your records</p>
+          </div>
                   </td>
                 </tr>
                 
@@ -147,14 +159,7 @@ const templates = {
               <table width="800" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                 <!-- Header with Trizen Logo -->
                 <tr>
-                  <td style="background-color: #1e3a8a; padding: 30px; text-align: center;">
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td align="center" style="color: #ffffff; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">
-                          TRIZEN
-                        </td>
-                      </tr>
-                    </table>
+                  <td style="padding: 25px 20px; text-align: center; border-radius: 8px 8px 0 0; background-color: #2E1F5C; background-image: url('https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'); background-repeat: no-repeat; background-position: center; background-size: 460px auto; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
                   </td>
                 </tr>
                 
@@ -249,14 +254,7 @@ const templates = {
               <table width="800" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                 <!-- Header with Trizen Logo -->
                 <tr>
-                  <td style="background-color: #1e3a8a; padding: 30px; text-align: center;">
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td align="center" style="color: #ffffff; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">
-                          TRIZEN
-                        </td>
-                      </tr>
-                    </table>
+                  <td style="padding: 25px 20px; text-align: center; border-radius: 8px 8px 0 0; background-color: #2E1F5C; background-image: url('https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'); background-repeat: no-repeat; background-position: center; background-size: 460px auto; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
                   </td>
                 </tr>
                 
@@ -322,14 +320,7 @@ const templates = {
               <table width="800" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                 <!-- Header with Trizen Logo -->
                 <tr>
-                  <td style="background-color: #1e3a8a; padding: 30px; text-align: center;">
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td align="center" style="color: #ffffff; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">
-                          TRIZEN
-                        </td>
-                      </tr>
-                    </table>
+                  <td style="padding: 25px 20px; text-align: center; border-radius: 8px 8px 0 0; background-color: #2E1F5C; background-image: url('https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'); background-repeat: no-repeat; background-position: center; background-size: 460px auto; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
                   </td>
                 </tr>
                 
@@ -348,8 +339,8 @@ const templates = {
                     </p>
                   </td>
                 </tr>
-                
-                <!-- Footer -->
+            
+            <!-- Footer -->
                 <tr>
                   <td style="background-color: #f8f9fa; padding: 25px; text-align: center; border-top: 1px solid #e9ecef;">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -395,14 +386,7 @@ const templates = {
               <table width="800" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                 <!-- Header with Trizen Logo -->
                 <tr>
-                  <td style="background-color: #1e3a8a; padding: 30px; text-align: center;">
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td align="center" style="color: #ffffff; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">
-                          TRIZEN
-                        </td>
-                      </tr>
-                    </table>
+                  <td style="padding: 25px 20px; text-align: center; border-radius: 8px 8px 0 0; background-color: #2E1F5C; background-image: url('https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'); background-repeat: no-repeat; background-position: center; background-size: 460px auto; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
                   </td>
                 </tr>
                 
