@@ -19,10 +19,10 @@ async function testSpeakerEndpoint() {
             specialRequirements: 'None'
         };
 
-        console.log('📧 Sending request to: http://localhost:5000/api/speakers/apply');
+        console.log('📧 Sending request to: https://trizencommunitybackend.llp.trizenventures.com/api/speakers/apply');
         console.log('📋 Data being sent:', JSON.stringify(testData, null, 2));
 
-        const response = await fetch('http://localhost:5000/api/speakers/apply', {
+        const response = await fetch('https://trizencommunitybackend.llp.trizenventures.com/api/speakers/apply', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -124,7 +124,7 @@ router.post('/apply', [
                         expertise,
                         bio,
                         appliedAt: new Date().toLocaleDateString(),
-                        adminUrl: `${process.env.FRONTEND_URL || 'http://localhost:8081'}/admin/speakers`
+                        adminUrl: `${process.env.FRONTEND_URL || 'https://community.trizenventures.com'}/admin/speakers`
                     }
                 });
                 console.log(`✅ Speaker application notification sent to admin`);
@@ -365,7 +365,7 @@ router.post('/invite', protect, isAdmin, [
                         eventDate: event.startDate,
                         eventLocation: event.location,
                         message,
-                        invitationUrl: `${process.env.FRONTEND_URL || 'http://localhost:8081'}/speakers/apply`,
+                        invitationUrl: `${process.env.FRONTEND_URL || 'https://community.trizenventures.com'}/speakers/apply`,
                         supportEmail: process.env.EMAIL_FROM || 'support@trizenventures.com'
                     }
                 });

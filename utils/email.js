@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 // Helper function to generate unsubscribe footer
 const generateUnsubscribeFooter = (subscriptionToken) => {
   // Use the backend direct unsubscribe endpoint that works without frontend
-  const unsubscribeUrl = `${process.env.BACKEND_URL || 'http://localhost:5000'}/unsubscribe/${subscriptionToken || ''}`;
+  const unsubscribeUrl = `${process.env.BACKEND_URL || 'https://trizencommunitybackend.llp.trizenventures.com'}/unsubscribe/${subscriptionToken || ''}`;
 
   return `
                       <tr>
@@ -161,7 +161,7 @@ const templates = {
                         <td align="center" style="padding-top: 15px;">
                           <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
                           <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.BACKEND_URL || 'http://localhost:5000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                            <a href="${process.env.BACKEND_URL || 'https://trizencommunitybackend.llp.trizenventures.com'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
                           </p>
                         </td>
                       </tr>
@@ -272,7 +272,7 @@ const templates = {
                         <td align="center" style="padding-top: 15px;">
                           <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
                           <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.BACKEND_URL || 'http://localhost:5000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                            <a href="${process.env.BACKEND_URL || 'https://trizencommunitybackend.llp.trizenventures.com'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
                           </p>
                         </td>
                       </tr>
@@ -354,7 +354,7 @@ const templates = {
                         <td align="center" style="padding-top: 15px;">
                           <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
                           <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.BACKEND_URL || 'http://localhost:5000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                            <a href="${process.env.BACKEND_URL || 'https://trizencommunitybackend.llp.trizenventures.com'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
                           </p>
                         </td>
                       </tr>
@@ -436,7 +436,7 @@ const templates = {
                         <td align="center" style="padding-top: 15px;">
                           <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
                           <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.BACKEND_URL || 'http://localhost:5000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                            <a href="${process.env.BACKEND_URL || 'https://trizencommunitybackend.llp.trizenventures.com'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
                           </p>
                         </td>
                       </tr>
@@ -541,7 +541,7 @@ const templates = {
                         <td align="center" style="padding-top: 15px;">
                           <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
                           <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.BACKEND_URL || 'http://localhost:5000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                            <a href="${process.env.BACKEND_URL || 'https://trizencommunitybackend.llp.trizenventures.com'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
                           </p>
                         </td>
                       </tr>

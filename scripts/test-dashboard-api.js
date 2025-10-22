@@ -8,7 +8,7 @@ async function testDashboardAPI() {
         // Test if server is running by trying auth endpoint
         console.log('🔍 Testing server connectivity...');
         try {
-            const testResponse = await fetch('http://localhost:5000/api/auth/login', {
+            const testResponse = await fetch('https://trizencommunitybackend.llp.trizenventures.com/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: 'test', password: 'test' })
@@ -21,7 +21,7 @@ async function testDashboardAPI() {
 
         // Test login first
         console.log('\n🔐 Testing login...');
-        const loginResponse = await fetch('http://localhost:5000/api/auth/login', {
+        const loginResponse = await fetch('https://trizencommunitybackend.llp.trizenventures.com/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ async function testDashboardAPI() {
 
         // Test the registrations endpoint
         console.log('\n📋 Testing registrations endpoint...');
-        const registrationsResponse = await fetch(`http://localhost:5000/api/users/${userId}/registrations`, {
+        const registrationsResponse = await fetch(`https://trizencommunitybackend.llp.trizenventures.com/api/users/${userId}/registrations`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,

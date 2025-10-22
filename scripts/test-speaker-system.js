@@ -10,7 +10,7 @@ const testData = {
     expertise: ['Technology', 'AI/ML', 'Innovation'],
     bio: 'Dr. Sarah Johnson is a leading expert in artificial intelligence and machine learning with over 10 years of experience in the tech industry. She has published numerous papers and spoken at major conferences worldwide.',
     appliedAt: new Date().toLocaleDateString(),
-    adminUrl: 'http://localhost:8081/admin/speakers',
+    adminUrl: 'https://community.trizenventures.com/admin/speakers',
     supportEmail: 'support@trizenventures.com',
     status: 'approved',
     updatedAt: new Date().toLocaleDateString(),
@@ -18,7 +18,7 @@ const testData = {
     eventTitle: 'AI Development Workshop',
     eventDate: 'January 25, 2025',
     eventLocation: 'Trizen Ventures Office, San Francisco',
-    invitationUrl: 'http://localhost:8081/speakers/apply'
+    invitationUrl: 'https://community.trizenventures.com/speakers/apply'
 };
 
 try {

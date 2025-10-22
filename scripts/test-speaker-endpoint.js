@@ -5,7 +5,7 @@ async function testSpeakerEndpoint() {
     try {
         console.log('🔍 Testing speaker application endpoint...');
 
-        const response = await fetch('http://localhost:5000/api/speakers/apply', {
+        const response = await fetch('https://trizencommunitybackend.llp.trizenventures.com/api/speakers/apply', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

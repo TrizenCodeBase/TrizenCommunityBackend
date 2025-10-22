@@ -41,7 +41,7 @@ LINKEDIN_CLIENT_SECRET=your_linkedin_client_secret
 SESSION_SECRET=your_session_secret_key_here_trizen_community_2025
 
 # Frontend URL
-FRONTEND_URL=http://localhost:8081
+FRONTEND_URL=https://community.trizenventures.com
 
 # Rate Limiting
 RATE_LIMIT_WINDOW_MS=900000
@@ -53,7 +53,7 @@ ALLOWED_FILE_TYPES=image/jpeg,image/png,image/gif,image/webp
 
 # Security
 BCRYPT_ROUNDS=12
-CORS_ORIGIN=http://localhost:8081`;
+CORS_ORIGIN=https://community.trizenventures.com`;
 
 try {
     fs.writeFileSync(path.join(__dirname, '..', '.env'), envContent);

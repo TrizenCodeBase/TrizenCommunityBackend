@@ -593,7 +593,7 @@ router.post('/:id/register', protect, async (req, res) => {
         const eventTime = formatEventTime(event.startDate, event.endDate);
 
         // Prepare ticket URL
-        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:8081';
+        const frontendUrl = process.env.FRONTEND_URL || 'https://community.trizenventures.com';
         const ticketUrl = `${frontendUrl}/events/${event._id}/ticket/${registration._id}`;
         const eventUrl = `${frontendUrl}/events/${event._id}`;
 
