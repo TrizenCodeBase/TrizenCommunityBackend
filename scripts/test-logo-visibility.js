@@ -61,3 +61,4 @@ try {
 } catch (error) {
     console.error('❌ Error testing logo visibility:', error.message);
 }
+

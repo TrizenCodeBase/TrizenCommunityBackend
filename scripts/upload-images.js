@@ -19,3 +19,4 @@ console.log('   - https://i.imgur.com/abc123.png');
 console.log('   - https://i.ibb.co/xyz789/contact-info.png');
 console.log('');
 console.log('After uploading, provide the URLs and I will update the email template.');
+

@@ -192,3 +192,4 @@ speakerSchema.methods.getPublicProfile = function () {
 };
 
 module.exports = mongoose.model('Speaker', speakerSchema);
+

@@ -84,3 +84,4 @@ try {
 } catch (error) {
     console.error('❌ Error testing email template:', error.message);
 }
+

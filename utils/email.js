@@ -11,6 +11,18 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// Helper function to generate unsubscribe footer
+const generateUnsubscribeFooter = (subscriptionToken) => `
+                      <tr>
+                        <td align="center" style="padding-top: 15px;">
+                          <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
+                          <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
+                            <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/unsubscribe/${subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                          </p>
+                        </td>
+                      </tr>
+`;
+
 // Email templates
 const templates = {
   eventRegistration: (data) => ({
@@ -127,7 +139,10 @@ const templates = {
                       </tr>
                       <tr>
                         <td align="center" style="padding-top: 15px;">
-                          <p style="margin: 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
+                          <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
+                          <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
+                            <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                          </p>
                         </td>
                       </tr>
                     </table>
@@ -222,7 +237,10 @@ const templates = {
                       </tr>
                       <tr>
                         <td align="center" style="padding-top: 15px;">
-                          <p style="margin: 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
+                          <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
+                          <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
+                            <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                          </p>
                         </td>
                       </tr>
                     </table>
@@ -288,7 +306,10 @@ const templates = {
                       </tr>
                       <tr>
                         <td align="center" style="padding-top: 15px;">
-                          <p style="margin: 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
+                          <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
+                          <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
+                            <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                          </p>
                         </td>
                       </tr>
                     </table>
@@ -354,7 +375,10 @@ const templates = {
                       </tr>
                       <tr>
                         <td align="center" style="padding-top: 15px;">
-                          <p style="margin: 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
+                          <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
+                          <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
+                            <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                          </p>
                         </td>
                       </tr>
                     </table>
@@ -443,7 +467,10 @@ const templates = {
                       </tr>
                       <tr>
                         <td align="center" style="padding-top: 15px;">
-                          <p style="margin: 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
+                          <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
+                          <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
+                            <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                          </p>
                         </td>
                       </tr>
                     </table>
@@ -460,7 +487,21 @@ const templates = {
 };
 
 // Send email function
-const sendEmail = async ({ email, template, data }) => {
+const sendEmail = async ({ email, template, data, checkSubscription = true }) => {
+  // If checking subscription, verify user is subscribed
+  if (checkSubscription && data.userId) {
+    const User = require('../models/User');
+    const user = await User.findById(data.userId);
+    if (!user || !user.isSubscribed) {
+      console.log('📧 User not subscribed, skipping email:', email);
+      return { success: false, error: 'User not subscribed' };
+    }
+    // Add subscription token to data if not present
+    if (!data.subscriptionToken) {
+      data.subscriptionToken = user.subscriptionToken;
+    }
+  }
+
   const emailTemplate = templates[template](data);
 
   const mailOptions = {

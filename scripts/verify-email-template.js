@@ -51,3 +51,4 @@ try {
 } catch (error) {
     console.error('❌ Error loading template:', error.message);
 }
+

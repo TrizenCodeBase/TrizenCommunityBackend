@@ -72,3 +72,4 @@ try {
 } catch (error) {
     console.error('❌ Error testing speaker system:', error.message);
 }
+

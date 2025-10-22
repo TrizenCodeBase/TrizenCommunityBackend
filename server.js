@@ -27,6 +27,7 @@ const adminRoutes = require('./routes/admin');
 const uploadRoutes = require('./routes/upload');
 const contactRoutes = require('./routes/contact');
 const speakerRoutes = require('./routes/speakers');
+const subscriptionRoutes = require('./routes/subscriptions');
 
 // Import middleware
 const errorHandler = require('./middleware/errorHandler');
@@ -74,7 +75,7 @@ app.use('/api/', limiter);
 
 // CORS configuration
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || ["http://localhost:3000", "http://localhost:8081"],
+    origin: process.env.CORS_ORIGIN || ["http://localhost:3000", "http://localhost:8080", "http://localhost:8081"],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
@@ -143,7 +144,7 @@ app.get('/health', (req, res) => {
         memory: process.memoryUsage(),
         database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
     };
-    
+
     res.status(200).json(healthCheck);
 });
 
@@ -156,6 +157,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/speakers', speakerRoutes);
+app.use('/api/subscriptions', subscriptionRoutes);
 
 // Socket.IO connection handling
 io.on('connection', (socket) => {

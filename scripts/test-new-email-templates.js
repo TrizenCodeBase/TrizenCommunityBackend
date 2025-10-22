@@ -56,3 +56,4 @@ async function testNewEmailTemplates() {
 }
 
 testNewEmailTemplates();
+

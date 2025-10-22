@@ -131,6 +131,31 @@ const userSchema = new mongoose.Schema({
         default: 0
     },
 
+    // Email Subscription
+    isSubscribed: {
+        type: Boolean,
+        default: true
+    },
+    subscriptionToken: {
+        type: String,
+        unique: true,
+        sparse: true
+    },
+    subscriptionPreferences: {
+        eventUpdates: {
+            type: Boolean,
+            default: true
+        },
+        newsletter: {
+            type: Boolean,
+            default: true
+        },
+        promotional: {
+            type: Boolean,
+            default: false
+        }
+    },
+
     // Preferences
     preferences: {
         emailNotifications: {
@@ -221,17 +246,24 @@ userSchema.virtual('profileCompletion').get(function () {
     return Math.round((completedFields.length / fields.length) * 100);
 });
 
-// Pre-save middleware to hash password
+// Pre-save middleware to hash password and generate subscription token
 userSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next();
-
-    try {
-        const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_ROUNDS) || 12);
-        this.password = await bcrypt.hash(this.password, salt);
-        next();
-    } catch (error) {
-        next(error);
+    // Hash password if modified
+    if (this.isModified('password')) {
+        try {
+            const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_ROUNDS) || 12);
+            this.password = await bcrypt.hash(this.password, salt);
+        } catch (error) {
+            return next(error);
+        }
     }
+
+    // Generate subscription token if not exists
+    if (this.isNew && !this.subscriptionToken) {
+        this.subscriptionToken = require('crypto').randomBytes(32).toString('hex');
+    }
+
+    next();
 });
 
 // Method to compare password
@@ -274,6 +306,29 @@ userSchema.methods.getPublicProfile = function () {
     delete userObject.githubId;
     delete userObject.linkedinId;
     return userObject;
+};
+
+// Method to generate subscription token
+userSchema.methods.generateSubscriptionToken = function () {
+    this.subscriptionToken = require('crypto').randomBytes(32).toString('hex');
+    return this.subscriptionToken;
+};
+
+// Method to unsubscribe
+userSchema.methods.unsubscribe = function () {
+    this.isSubscribed = false;
+    return this.save();
+};
+
+// Method to subscribe
+userSchema.methods.subscribe = function () {
+    this.isSubscribed = true;
+    return this.save();
+};
+
+// Static method to find by subscription token
+userSchema.statics.findBySubscriptionToken = function (token) {
+    return this.findOne({ subscriptionToken: token });
 };
 
 // Static method to find by email or username

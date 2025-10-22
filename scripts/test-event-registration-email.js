@@ -39,3 +39,4 @@ async function testEventRegistrationEmail() {
 
 // Run the test
 testEventRegistrationEmail();
+

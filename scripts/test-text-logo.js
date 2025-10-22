@@ -85,3 +85,4 @@ try {
 } catch (error) {
     console.error('❌ Error testing templates:', error.message);
 }
+

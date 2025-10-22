@@ -77,3 +77,4 @@ try {
 } catch (error) {
     console.error('❌ Error creating .env file:', error.message);
 }
+

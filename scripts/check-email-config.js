@@ -71,3 +71,4 @@ console.log('🔄 After updating the password:');
 console.log('1. Save the .env file');
 console.log('2. Restart the server: node server.js');
 console.log('3. Test the contact form');
+

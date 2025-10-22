@@ -76,3 +76,4 @@ try {
 } catch (error) {
     console.error('❌ Error updating .env file:', error.message);
 }
+
