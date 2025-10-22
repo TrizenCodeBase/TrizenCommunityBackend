@@ -62,3 +62,4 @@ try {
     console.error('❌ Error testing logo visibility:', error.message);
 }
 
+

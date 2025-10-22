@@ -54,3 +54,4 @@ if (process.env.EMAIL_HOST && process.env.EMAIL_USER && process.env.EMAIL_PASS) 
     console.log('💡 To test actual emails, make sure EMAIL_HOST, EMAIL_USER, and EMAIL_PASS are set in your environment variables.');
 }
 
+

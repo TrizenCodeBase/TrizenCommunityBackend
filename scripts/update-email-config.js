@@ -77,3 +77,4 @@ try {
     console.error('❌ Error updating .env file:', error.message);
 }
 
+

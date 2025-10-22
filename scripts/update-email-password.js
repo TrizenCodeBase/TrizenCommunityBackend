@@ -32,3 +32,4 @@ console.log('   EMAIL_PASS=your_actual_password_here');
 console.log('');
 console.log('⚠️  After updating the password, restart the server!');
 
+
