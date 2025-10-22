@@ -76,7 +76,13 @@ app.use('/api/', limiter);
 
 // CORS configuration
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || ["http://localhost:3000", "http://localhost:8080", "https://community.trizenventures.com"],
+    origin: [
+        "http://localhost:3000",
+        "http://localhost:8080",
+        "http://localhost:8081",
+        "https://community.trizenventures.com",
+        "https://trizenventures.com"
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
