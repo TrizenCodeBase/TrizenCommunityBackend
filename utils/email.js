@@ -13,22 +13,31 @@ const transporter = nodemailer.createTransport({
 
 // Helper function to generate unsubscribe footer
 const generateUnsubscribeFooter = (subscriptionToken) => {
-  // Use the backend direct unsubscribe endpoint that works without frontend
-  const unsubscribeUrl = `${process.env.BACKEND_URL || 'https://trizencommunitybackend.llp.trizenventures.com'}/unsubscribe/${subscriptionToken || ''}`;
+  // Redirect to settings page with email tab for easy unsubscribe
+  const frontendUrl = process.env.FRONTEND_URL || 'https://community.trizenventures.com';
+  const unsubscribeUrl = `${frontendUrl}/settings?tab=emails`;
 
   return `
                       <tr>
-                        <td align="center" style="padding: 20px; background-color: #f8f9fa; border-top: 1px solid #e9ecef;">
-                          <div style="max-width: 300px; margin: 0 auto;">
-                            <p style="margin: 0 0 15px 0; font-size: 12px; color: #6c757d; font-family: Arial, sans-serif; line-height: 1.4;">
-                              You're receiving this email because you're part of the Trizen Community. 
-                              If you no longer wish to receive these emails, you can unsubscribe below.
-                            </p>
-                            <a href="${unsubscribeUrl}" 
-                               style="display: inline-block; background-color: #dc3545; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-family: Arial, sans-serif; font-weight: bold; margin-bottom: 10px;">
-                              Unsubscribe from Emails
-                            </a>
-                            <p style="margin: 10px 0 0 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
+                        <td align="center" style="padding: 30px 20px; background-color: #f8f9fa; border-top: 2px solid #e9ecef;">
+                          <div style="max-width: 400px; margin: 0 auto;">
+                            <div style="background-color: #ffffff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                              <h4 style="margin: 0 0 15px 0; font-size: 16px; color: #333333; font-family: Arial, sans-serif; font-weight: bold;">
+                                Email Preferences
+                              </h4>
+                              <p style="margin: 0 0 20px 0; font-size: 14px; color: #6c757d; font-family: Arial, sans-serif; line-height: 1.5;">
+                                You're receiving this email because you're part of the Trizen Community. 
+                                Manage your email preferences or unsubscribe anytime.
+                              </p>
+                              <a href="${unsubscribeUrl}" 
+                                 style="display: inline-block; background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-family: Arial, sans-serif; font-weight: bold; margin-bottom: 15px; transition: background-color 0.3s;">
+                                Manage Email Settings
+                              </a>
+                              <p style="margin: 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">
+                                This will take you to your account settings where you can customize your email preferences.
+                              </p>
+                            </div>
+                            <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
                               © 2025 Trizen Ventures. All rights reserved.
                             </p>
                           </div>
@@ -145,9 +154,9 @@ const templates = {
                   </td>
                 </tr>
                 
-                <!-- Footer -->
+                <!-- Contact Information -->
                 <tr>
-                  <td style="background-color: #f8f9fa; padding: 35px; text-align: center; border-top: 1px solid #e9ecef; border-radius: 0 0 12px 12px;">
+                  <td style="background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef;">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
@@ -157,17 +166,11 @@ const templates = {
                           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #2563eb; text-decoration: none;">Follow us on LinkedIn</a></p>
                         </td>
                       </tr>
-                      <tr>
-                        <td align="center" style="padding-top: 15px;">
-                          <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
-                          <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.BACKEND_URL || 'https://trizencommunitybackend.llp.trizenventures.com'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
-                          </p>
-                        </td>
-                      </tr>
                     </table>
                   </td>
                 </tr>
+                
+                ${generateUnsubscribeFooter(data.subscriptionToken)}
               </table>
             </td>
           </tr>
@@ -256,9 +259,9 @@ const templates = {
                   </td>
                 </tr>
                 
-                <!-- Footer -->
+                <!-- Contact Information -->
                 <tr>
-                  <td style="background-color: #f8f9fa; padding: 35px; text-align: center; border-top: 1px solid #e9ecef; border-radius: 0 0 12px 12px;">
+                  <td style="background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef;">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
@@ -268,17 +271,11 @@ const templates = {
                           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #2563eb; text-decoration: none;">Follow us on LinkedIn</a></p>
                         </td>
                       </tr>
-                      <tr>
-                        <td align="center" style="padding-top: 15px;">
-                          <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
-                          <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.BACKEND_URL || 'https://trizencommunitybackend.llp.trizenventures.com'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
-                          </p>
-                        </td>
-                      </tr>
                     </table>
                   </td>
                 </tr>
+                
+                ${generateUnsubscribeFooter(data.subscriptionToken)}
               </table>
             </td>
           </tr>
@@ -338,9 +335,9 @@ const templates = {
                   </td>
                 </tr>
                 
-                <!-- Footer -->
+                <!-- Contact Information -->
                 <tr>
-                  <td style="background-color: #f8f9fa; padding: 35px; text-align: center; border-top: 1px solid #e9ecef; border-radius: 0 0 12px 12px;">
+                  <td style="background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef;">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
@@ -350,17 +347,11 @@ const templates = {
                           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #2563eb; text-decoration: none;">Follow us on LinkedIn</a></p>
                         </td>
                       </tr>
-                      <tr>
-                        <td align="center" style="padding-top: 15px;">
-                          <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
-                          <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.BACKEND_URL || 'https://trizencommunitybackend.llp.trizenventures.com'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
-                          </p>
-                        </td>
-                      </tr>
                     </table>
                   </td>
                 </tr>
+                
+                ${generateUnsubscribeFooter(data.subscriptionToken)}
               </table>
             </td>
           </tr>
@@ -419,10 +410,10 @@ const templates = {
                     </p>
                   </td>
                 </tr>
-            
-            <!-- Footer -->
+                
+                <!-- Contact Information -->
                 <tr>
-                  <td style="background-color: #f8f9fa; padding: 35px; text-align: center; border-top: 1px solid #e9ecef; border-radius: 0 0 12px 12px;">
+                  <td style="background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef;">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
@@ -432,17 +423,11 @@ const templates = {
                           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #2563eb; text-decoration: none;">Follow us on LinkedIn</a></p>
                         </td>
                       </tr>
-                      <tr>
-                        <td align="center" style="padding-top: 15px;">
-                          <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
-                          <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.BACKEND_URL || 'https://trizencommunitybackend.llp.trizenventures.com'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
-                          </p>
-                        </td>
-                      </tr>
                     </table>
                   </td>
                 </tr>
+                
+                ${generateUnsubscribeFooter(data.subscriptionToken)}
               </table>
             </td>
           </tr>
@@ -525,9 +510,9 @@ const templates = {
                   </td>
                 </tr>
                 
-                <!-- Footer -->
+                <!-- Contact Information -->
                 <tr>
-                  <td style="background-color: #f8f9fa; padding: 35px; text-align: center; border-top: 1px solid #e9ecef; border-radius: 0 0 12px 12px;">
+                  <td style="background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef;">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
@@ -537,15 +522,115 @@ const templates = {
                           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #2563eb; text-decoration: none;">Follow us on LinkedIn</a></p>
                         </td>
                       </tr>
+                    </table>
+                  </td>
+                </tr>
+                
+                ${generateUnsubscribeFooter(data.subscriptionToken)}
+              </table>
+            </td>
+          </tr>
+        </table>
+      </body>
+      </html>
+    `
+  }),
+
+  // OTP Verification template for email verification and password reset
+  otpVerification: (data) => ({
+    subject: data.type === 'password_reset'
+      ? 'Your Password Reset Code - Trizen Community'
+      : 'Verify Your Email - Trizen Community',
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>${data.type === 'password_reset' ? 'Password Reset' : 'Email Verification'}</title>
+      </head>
+      <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f5f5f5;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8fafc;">
+          <tr>
+            <td align="center" style="padding: 40px 20px;">
+              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;">
+                <!-- Header with Trizen Logo -->
+                <tr>
+                  <td style="padding: 0; text-align: center; background: #ffffff; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
+                    <div style="padding: 40px; max-width: 600px; margin: 0 auto;">
+                      <img src="https://drive.google.com/thumbnail?id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR&sz=w500" 
+                        alt="TRIZEN" 
+                        style="height: auto; width: 100%; max-width: 450px; display: block; margin: 0 auto;"
+                        onerror="this.src='https://lh3.googleusercontent.com/d/1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'; this.onerror=null;">
+                    </div>
+                  </td>
+                </tr>
+                
+                <!-- Title Banner -->
+                <tr>
+                  <td style="background-color: ${data.type === 'password_reset' ? '#dc2626' : '#2563eb'}; padding: 20px; text-align: center;">
+                    <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: bold; font-family: Arial, sans-serif;">
+                      ${data.type === 'password_reset' ? 'Password Reset Request' : 'Verify Your Email'}
+                    </h1>
+                  </td>
+                </tr>
+                
+                <!-- Content -->
+                <tr>
+                  <td style="padding: 40px;">
+                    <p style="margin: 0 0 20px 0; color: #333333; font-size: 16px; font-family: Arial, sans-serif;">
+                      Hi ${data.name},
+                    </p>
+                    <p style="margin: 0 0 20px 0; color: #666666; font-size: 16px; font-family: Arial, sans-serif; line-height: 1.6;">
+                      ${data.type === 'password_reset'
+        ? 'We received a request to reset your password. Use the verification code below to complete the process:'
+        : 'Thank you for joining the Trizen Community! Please use the verification code below to verify your email address:'}
+                    </p>
+                    
+                    <!-- OTP Code Box -->
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 30px 0;">
                       <tr>
-                        <td align="center" style="padding-top: 15px;">
-                          <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
-                          <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.BACKEND_URL || 'https://trizencommunitybackend.llp.trizenventures.com'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
-                          </p>
+                        <td align="center">
+                          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 12px; display: inline-block;">
+                            <p style="margin: 0 0 10px 0; color: #ffffff; font-size: 14px; font-family: Arial, sans-serif; text-transform: uppercase; letter-spacing: 1px;">
+                              Your Verification Code
+                            </p>
+                            <p style="margin: 0; color: #ffffff; font-size: 42px; font-weight: bold; font-family: 'Courier New', monospace; letter-spacing: 8px;">
+                              ${data.otp}
+                            </p>
+                          </div>
                         </td>
                       </tr>
                     </table>
+                    
+                    <p style="margin: 20px 0; color: #666666; font-size: 14px; font-family: Arial, sans-serif; line-height: 1.6;">
+                      This code will expire in <strong>10 minutes</strong> for your security.
+                    </p>
+                    
+                    ${data.type === 'password_reset'
+        ? `<p style="margin: 20px 0; color: #dc2626; font-size: 14px; font-family: Arial, sans-serif; line-height: 1.6;">
+                          <strong>⚠️ Important:</strong> If you didn't request a password reset, please ignore this email or contact our support team.
+                        </p>`
+        : ''}
+                    
+                    <div style="background-color: #f8f9fa; padding: 20px; border-left: 4px solid #2563eb; border-radius: 4px; margin: 30px 0;">
+                      <p style="margin: 0; color: #666666; font-size: 14px; font-family: Arial, sans-serif;">
+                        <strong>Need help?</strong> Contact us at 
+                        <a href="mailto:support@trizenventures.com" style="color: #2563eb; text-decoration: none;">support@trizenventures.com</a>
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+                
+                <!-- Footer -->
+                <tr>
+                  <td style="background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef;">
+                    <p style="margin: 0 0 10px 0; color: #999999; font-size: 12px; font-family: Arial, sans-serif;">
+                      This is an automated message, please do not reply to this email.
+                    </p>
+                    <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
+                      © 2025 Trizen Ventures. All rights reserved.
+                    </p>
                   </td>
                 </tr>
               </table>

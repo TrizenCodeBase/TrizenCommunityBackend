@@ -51,7 +51,8 @@ router.post('/register', [
                             name: existingUser.name,
                             otp: otpDoc.otp,
                             type: 'email_verification'
-                        }
+                        },
+                        checkSubscription: false
                     });
 
                     return res.status(200).json({
@@ -105,7 +106,8 @@ router.post('/register', [
                     name: user.name,
                     otp: otpDoc.otp,
                     type: 'email_verification'
-                }
+                },
+                checkSubscription: false
             });
 
             res.status(201).json({
@@ -337,7 +339,8 @@ router.post('/resend-otp', [
                 name,
                 otp: otpDoc.otp,
                 type
-            }
+            },
+            checkSubscription: false
         });
 
         res.json({
@@ -392,7 +395,8 @@ router.post('/forgot-password', [
                     name: user.name,
                     otp: otpDoc.otp,
                     type: 'password_reset'
-                }
+                },
+                checkSubscription: false
             });
 
             res.json({
