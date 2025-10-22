@@ -12,16 +12,30 @@ const transporter = nodemailer.createTransport({
 });
 
 // Helper function to generate unsubscribe footer
-const generateUnsubscribeFooter = (subscriptionToken) => `
+const generateUnsubscribeFooter = (subscriptionToken) => {
+  // Use the backend direct unsubscribe endpoint that works without frontend
+  const unsubscribeUrl = `${process.env.BACKEND_URL || 'http://localhost:5000'}/unsubscribe/${subscriptionToken || ''}`;
+
+  return `
                       <tr>
-                        <td align="center" style="padding-top: 15px;">
-                          <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
-                          <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/unsubscribe/${subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
-                          </p>
+                        <td align="center" style="padding: 20px; background-color: #f8f9fa; border-top: 1px solid #e9ecef;">
+                          <div style="max-width: 300px; margin: 0 auto;">
+                            <p style="margin: 0 0 15px 0; font-size: 12px; color: #6c757d; font-family: Arial, sans-serif; line-height: 1.4;">
+                              You're receiving this email because you're part of the Trizen Community. 
+                              If you no longer wish to receive these emails, you can unsubscribe below.
+                            </p>
+                            <a href="${unsubscribeUrl}" 
+                               style="display: inline-block; background-color: #dc3545; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-family: Arial, sans-serif; font-weight: bold; margin-bottom: 10px;">
+                              Unsubscribe from Emails
+                            </a>
+                            <p style="margin: 10px 0 0 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
+                              © 2025 Trizen Ventures. All rights reserved.
+                            </p>
+                          </div>
                         </td>
                       </tr>
 `;
+};
 
 // Email templates
 const templates = {
@@ -36,14 +50,20 @@ const templates = {
         <title>Event Registration Confirmed</title>
       </head>
       <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f5f5f5;">
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f5f5f5;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8fafc;">
           <tr>
-            <td align="center" style="padding: 20px;">
-              <table width="800" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <td align="center" style="padding: 40px 20px;">
+              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;"
                 <!-- Header with Trizen Logo -->
                 <tr>
-                  <td style="padding: 25px 20px; text-align: center; border-radius: 8px 8px 0 0; background-color: #2E1F5C; background-image: url('https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'); background-repeat: no-repeat; background-position: center; background-size: 460px auto; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
-                  </td>
+                <td style="padding: 0; text-align: center; background: #ffffff; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
+                <div style="padding: 40px; max-width: 600px; margin: 0 auto;">
+                <img src="https://drive.google.com/thumbnail?id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR&sz=w500" 
+                alt="TRIZEN" 
+                style="height: auto; width: 100%; max-width: 450px; display: block; margin: 0 auto;"
+                onerror="this.src='https://lh3.googleusercontent.com/d/1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'; this.onerror=null;">
+                </div>
+                </td>
                 </tr>
                 
                 <!-- Registration Banner -->
@@ -56,7 +76,7 @@ const templates = {
                 
                 <!-- Event Details -->
                 <tr>
-                  <td style="padding: 30px;">
+                  <td style="padding: 40px;">
                     <h2 style="margin: 0 0 20px 0; color: #333333; font-size: 20px; font-family: Arial, sans-serif;">Event Details</h2>
                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
@@ -127,7 +147,7 @@ const templates = {
                 
                 <!-- Footer -->
                 <tr>
-                  <td style="background-color: #f8f9fa; padding: 25px; text-align: center; border-top: 1px solid #e9ecef;">
+                  <td style="background-color: #f8f9fa; padding: 35px; text-align: center; border-top: 1px solid #e9ecef; border-radius: 0 0 12px 12px;">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
@@ -141,7 +161,7 @@ const templates = {
                         <td align="center" style="padding-top: 15px;">
                           <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
                           <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                            <a href="${process.env.BACKEND_URL || 'http://localhost:5000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
                           </p>
                         </td>
                       </tr>
@@ -168,13 +188,26 @@ const templates = {
         <title>New Contact Form Submission</title>
       </head>
       <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f5f5f5;">
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f5f5f5;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8fafc;">
           <tr>
-            <td align="center" style="padding: 20px;">
-              <table width="800" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <td align="center" style="padding: 40px 20px;">
+              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;"
                 <!-- Header with Trizen Logo -->
                 <tr>
-                  <td style="padding: 25px 20px; text-align: center; border-radius: 8px 8px 0 0; background-color: #2E1F5C; background-image: url('https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'); background-repeat: no-repeat; background-position: center; background-size: 460px auto; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
+                  <td style="padding: 60px 40px; text-align: center; border-radius: 12px 12px 0 0; background: linear-gradient(135deg, #2E1F5C 0%, #1a0f3a 100%); -webkit-user-select: none; -moz-user-select: none; user-select: none; min-height: 200px; position: relative;">
+                    <!-- Trizen Logo Container -->
+                    <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.95); padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                      <img src="https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR" 
+                           alt="TRIZEN" 
+                           style="height: 60px; width: auto; max-width: 300px; display: block; margin: 0 auto;"
+                           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                      <!-- Fallback text if image fails -->
+                      <div style="display: none; color: #2E1F5C; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">TRIZEN</div>
+                    </div>
+                    <!-- Tagline -->
+                    <div style="margin-top: 20px; color: #ffffff; font-size: 16px; font-family: Arial, sans-serif; font-weight: 300; opacity: 0.9;">
+                      Innovation Community
+                    </div>
                   </td>
                 </tr>
                 
@@ -225,7 +258,7 @@ const templates = {
                 
                 <!-- Footer -->
                 <tr>
-                  <td style="background-color: #f8f9fa; padding: 25px; text-align: center; border-top: 1px solid #e9ecef;">
+                  <td style="background-color: #f8f9fa; padding: 35px; text-align: center; border-top: 1px solid #e9ecef; border-radius: 0 0 12px 12px;">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
@@ -239,7 +272,7 @@ const templates = {
                         <td align="center" style="padding-top: 15px;">
                           <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
                           <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                            <a href="${process.env.BACKEND_URL || 'http://localhost:5000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
                           </p>
                         </td>
                       </tr>
@@ -266,13 +299,26 @@ const templates = {
         <title>Thank you for contacting us</title>
       </head>
       <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f5f5f5;">
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f5f5f5;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8fafc;">
           <tr>
-            <td align="center" style="padding: 20px;">
-              <table width="800" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <td align="center" style="padding: 40px 20px;">
+              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;"
                 <!-- Header with Trizen Logo -->
                 <tr>
-                  <td style="padding: 25px 20px; text-align: center; border-radius: 8px 8px 0 0; background-color: #2E1F5C; background-image: url('https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'); background-repeat: no-repeat; background-position: center; background-size: 460px auto; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
+                  <td style="padding: 60px 40px; text-align: center; border-radius: 12px 12px 0 0; background: linear-gradient(135deg, #2E1F5C 0%, #1a0f3a 100%); -webkit-user-select: none; -moz-user-select: none; user-select: none; min-height: 200px; position: relative;">
+                    <!-- Trizen Logo Container -->
+                    <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.95); padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                      <img src="https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR" 
+                           alt="TRIZEN" 
+                           style="height: 60px; width: auto; max-width: 300px; display: block; margin: 0 auto;"
+                           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                      <!-- Fallback text if image fails -->
+                      <div style="display: none; color: #2E1F5C; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">TRIZEN</div>
+                    </div>
+                    <!-- Tagline -->
+                    <div style="margin-top: 20px; color: #ffffff; font-size: 16px; font-family: Arial, sans-serif; font-weight: 300; opacity: 0.9;">
+                      Innovation Community
+                    </div>
                   </td>
                 </tr>
                 
@@ -294,7 +340,7 @@ const templates = {
                 
                 <!-- Footer -->
                 <tr>
-                  <td style="background-color: #f8f9fa; padding: 25px; text-align: center; border-top: 1px solid #e9ecef;">
+                  <td style="background-color: #f8f9fa; padding: 35px; text-align: center; border-top: 1px solid #e9ecef; border-radius: 0 0 12px 12px;">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
@@ -308,7 +354,7 @@ const templates = {
                         <td align="center" style="padding-top: 15px;">
                           <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
                           <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                            <a href="${process.env.BACKEND_URL || 'http://localhost:5000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
                           </p>
                         </td>
                       </tr>
@@ -335,13 +381,26 @@ const templates = {
         <title>Speaker Application Received</title>
       </head>
       <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f5f5f5;">
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f5f5f5;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8fafc;">
           <tr>
-            <td align="center" style="padding: 20px;">
-              <table width="800" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <td align="center" style="padding: 40px 20px;">
+              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;"
                 <!-- Header with Trizen Logo -->
                 <tr>
-                  <td style="padding: 25px 20px; text-align: center; border-radius: 8px 8px 0 0; background-color: #2E1F5C; background-image: url('https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'); background-repeat: no-repeat; background-position: center; background-size: 460px auto; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
+                  <td style="padding: 60px 40px; text-align: center; border-radius: 12px 12px 0 0; background: linear-gradient(135deg, #2E1F5C 0%, #1a0f3a 100%); -webkit-user-select: none; -moz-user-select: none; user-select: none; min-height: 200px; position: relative;">
+                    <!-- Trizen Logo Container -->
+                    <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.95); padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                      <img src="https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR" 
+                           alt="TRIZEN" 
+                           style="height: 60px; width: auto; max-width: 300px; display: block; margin: 0 auto;"
+                           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                      <!-- Fallback text if image fails -->
+                      <div style="display: none; color: #2E1F5C; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">TRIZEN</div>
+                    </div>
+                    <!-- Tagline -->
+                    <div style="margin-top: 20px; color: #ffffff; font-size: 16px; font-family: Arial, sans-serif; font-weight: 300; opacity: 0.9;">
+                      Innovation Community
+                    </div>
                   </td>
                 </tr>
                 
@@ -363,7 +422,7 @@ const templates = {
             
             <!-- Footer -->
                 <tr>
-                  <td style="background-color: #f8f9fa; padding: 25px; text-align: center; border-top: 1px solid #e9ecef;">
+                  <td style="background-color: #f8f9fa; padding: 35px; text-align: center; border-top: 1px solid #e9ecef; border-radius: 0 0 12px 12px;">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
@@ -377,7 +436,7 @@ const templates = {
                         <td align="center" style="padding-top: 15px;">
                           <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
                           <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                            <a href="${process.env.BACKEND_URL || 'http://localhost:5000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
                           </p>
                         </td>
                       </tr>
@@ -404,13 +463,26 @@ const templates = {
         <title>New Speaker Application</title>
       </head>
       <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f5f5f5;">
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f5f5f5;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8fafc;">
           <tr>
-            <td align="center" style="padding: 20px;">
-              <table width="800" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <td align="center" style="padding: 40px 20px;">
+              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;"
                 <!-- Header with Trizen Logo -->
                 <tr>
-                  <td style="padding: 25px 20px; text-align: center; border-radius: 8px 8px 0 0; background-color: #2E1F5C; background-image: url('https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'); background-repeat: no-repeat; background-position: center; background-size: 460px auto; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
+                  <td style="padding: 60px 40px; text-align: center; border-radius: 12px 12px 0 0; background: linear-gradient(135deg, #2E1F5C 0%, #1a0f3a 100%); -webkit-user-select: none; -moz-user-select: none; user-select: none; min-height: 200px; position: relative;">
+                    <!-- Trizen Logo Container -->
+                    <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.95); padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                      <img src="https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR" 
+                           alt="TRIZEN" 
+                           style="height: 60px; width: auto; max-width: 300px; display: block; margin: 0 auto;"
+                           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                      <!-- Fallback text if image fails -->
+                      <div style="display: none; color: #2E1F5C; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">TRIZEN</div>
+                    </div>
+                    <!-- Tagline -->
+                    <div style="margin-top: 20px; color: #ffffff; font-size: 16px; font-family: Arial, sans-serif; font-weight: 300; opacity: 0.9;">
+                      Innovation Community
+                    </div>
                   </td>
                 </tr>
                 
@@ -455,7 +527,7 @@ const templates = {
                 
                 <!-- Footer -->
                 <tr>
-                  <td style="background-color: #f8f9fa; padding: 25px; text-align: center; border-top: 1px solid #e9ecef;">
+                  <td style="background-color: #f8f9fa; padding: 35px; text-align: center; border-top: 1px solid #e9ecef; border-radius: 0 0 12px 12px;">
                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
@@ -469,7 +541,7 @@ const templates = {
                         <td align="center" style="padding-top: 15px;">
                           <p style="margin: 0 0 10px 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">© 2025 Trizen Ventures. All rights reserved.</p>
                           <p style="margin: 0; font-size: 11px; color: #999999; font-family: Arial, sans-serif;">
-                            <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
+                            <a href="${process.env.BACKEND_URL || 'http://localhost:5000'}/unsubscribe/${data.subscriptionToken || ''}" style="color: #999999; text-decoration: underline;">Unsubscribe from emails</a>
                           </p>
                         </td>
                       </tr>

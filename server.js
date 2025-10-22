@@ -28,6 +28,7 @@ const uploadRoutes = require('./routes/upload');
 const contactRoutes = require('./routes/contact');
 const speakerRoutes = require('./routes/speakers');
 const subscriptionRoutes = require('./routes/subscriptions');
+const unsubscribeRoutes = require('./routes/unsubscribe');
 
 // Import middleware
 const errorHandler = require('./middleware/errorHandler');
@@ -158,6 +159,7 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/speakers', speakerRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/unsubscribe', unsubscribeRoutes);
 
 // Socket.IO connection handling
 io.on('connection', (socket) => {
