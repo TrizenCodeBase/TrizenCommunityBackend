@@ -11,6 +11,27 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// Helper function to generate email header with TRIZEN logo and banner
+const generateEmailHeader = (bannerTitle, bannerSubtitle) => {
+  return `
+                <!-- Header with Trizen Logo and Banner -->
+                <tr>
+                <td style="padding: 40px 40px 20px 40px; text-align: center; background: #372f87; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
+                <div style="max-width: 300px; margin: 0 auto 30px auto;">
+                <img src="https://drive.google.com/uc?export=view&id=1L_BZnvQMruCtK30J_nVlhyq01iZNA1KL" 
+                alt="TRIZEN" 
+                style="height: auto; width: 100%; max-width: 250px; display: block; margin: 0 auto;"
+                onerror="this.src='https://drive.google.com/thumbnail?id=1L_BZnvQMruCtK30J_nVlhyq01iZNA1KL&sz=w500'; this.onerror=null;">
+                </div>
+                <div style="padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.2);">
+                    <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: bold; font-family: Arial, sans-serif;">${bannerTitle}</h1>
+                    ${bannerSubtitle ? `<p style="margin: 10px 0 0 0; color: #ffffff; font-size: 16px; font-family: Arial, sans-serif;">${bannerSubtitle}</p>` : ''}
+                </div>
+                </td>
+                </tr>
+`;
+};
+
 // Helper function to generate unsubscribe footer
 const generateUnsubscribeFooter = (subscriptionToken) => {
   // Redirect to settings page with email tab for easy unsubscribe
@@ -30,7 +51,7 @@ const generateUnsubscribeFooter = (subscriptionToken) => {
                                 Manage your email preferences or unsubscribe anytime.
                               </p>
                               <a href="${unsubscribeUrl}" 
-                                 style="display: inline-block; background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-family: Arial, sans-serif; font-weight: bold; margin-bottom: 15px; transition: background-color 0.3s;">
+                                 style="display: inline-block; background-color: #372f87; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-family: Arial, sans-serif; font-weight: bold; margin-bottom: 15px; transition: background-color 0.3s;">
                                 Manage Email Settings
                               </a>
                               <p style="margin: 0; font-size: 12px; color: #999999; font-family: Arial, sans-serif;">
@@ -62,26 +83,8 @@ const templates = {
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8fafc;">
           <tr>
             <td align="center" style="padding: 40px 20px;">
-              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;"
-                <!-- Header with Trizen Logo -->
-                <tr>
-                <td style="padding: 0; text-align: center; background: #ffffff; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
-                <div style="padding: 40px; max-width: 600px; margin: 0 auto;">
-                <img src="https://drive.google.com/thumbnail?id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR&sz=w500" 
-                alt="TRIZEN" 
-                style="height: auto; width: 100%; max-width: 450px; display: block; margin: 0 auto;"
-                onerror="this.src='https://lh3.googleusercontent.com/d/1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'; this.onerror=null;">
-                </div>
-                </td>
-                </tr>
-                
-                <!-- Registration Banner -->
-                <tr>
-                  <td style="background-color: #2563eb; padding: 20px; text-align: center;">
-                    <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: bold; font-family: Arial, sans-serif;">Registration Confirmed!</h1>
-                    <p style="margin: 10px 0 0 0; color: #ffffff; font-size: 16px; font-family: Arial, sans-serif;">You're all set for ${data.eventTitle}</p>
-                  </td>
-                </tr>
+              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;">
+                ${generateEmailHeader('Registration Confirmed!', `You're all set for ${data.eventTitle}`)}
                 
                 <!-- Event Details -->
                 <tr>
@@ -109,7 +112,7 @@ const templates = {
                       <tr>
                         <td style="padding: 10px 0; border-bottom: 1px solid #e9ecef;">
                           <strong style="color: #333333; font-family: Arial, sans-serif;">Registration ID:</strong>
-                          <span style="color: #2563eb; font-family: Arial, sans-serif; margin-left: 10px; font-weight: bold;">${data.ticketNumber || 'TRIZEN-' + Date.now().toString().slice(-8)}</span>
+                          <span style="color: #372f87; font-family: Arial, sans-serif; margin-left: 10px; font-weight: bold;">${data.ticketNumber || 'TRIZEN-' + Date.now().toString().slice(-8)}</span>
                         </td>
                       </tr>
                       <tr>
@@ -131,9 +134,9 @@ const templates = {
                 <!-- Ticket Section -->
                 <tr>
                   <td style="padding: 20px 30px; background-color: #f8f9fa; border-top: 1px solid #e9ecef;">
-                    <div style="background-color: #ffffff; border: 2px solid #2563eb; border-radius: 8px; padding: 20px; text-align: center;">
-                      <h3 style="margin: 0 0 10px 0; color: #2563eb; font-size: 18px; font-family: Arial, sans-serif;">Your Event Ticket</h3>
-                      <div style="background-color: #2563eb; color: #ffffff; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                    <div style="background-color: #ffffff; border: 2px solid #372f87; border-radius: 8px; padding: 20px; text-align: center;">
+                      <h3 style="margin: 0 0 10px 0; color: #372f87; font-size: 18px; font-family: Arial, sans-serif;">Your Event Ticket</h3>
+                      <div style="background-color: #372f87; color: #ffffff; padding: 15px; border-radius: 6px; margin: 10px 0;">
                         <strong style="font-size: 16px; font-family: Arial, sans-serif;">Registration ID: ${data.ticketNumber || 'TRIZEN-' + Date.now().toString().slice(-8)}</strong>
           </div>
                       <p style="margin: 10px 0 0 0; color: #666666; font-size: 14px; font-family: Arial, sans-serif;">Please keep this ID for your records</p>
@@ -162,8 +165,8 @@ const templates = {
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
                           <p style="margin: 0; font-size: 16px; font-weight: bold; color: #333333; font-family: Arial, sans-serif;">Trizen Ventures</p>
                           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Email: <span style="background-color: #fff3cd; padding: 2px 6px; border-radius: 3px;">support@trizenventures.com</span></p>
-                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Website: <a href="https://trizenventures.com" style="color: #2563eb; text-decoration: none;">https://trizenventures.com</a></p>
-                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #2563eb; text-decoration: none;">Follow us on LinkedIn</a></p>
+                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Website: <a href="https://trizenventures.com" style="color: #372f87; text-decoration: none;">https://trizenventures.com</a></p>
+                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #372f87; text-decoration: none;">Follow us on LinkedIn</a></p>
                         </td>
                       </tr>
                     </table>
@@ -194,25 +197,8 @@ const templates = {
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8fafc;">
           <tr>
             <td align="center" style="padding: 40px 20px;">
-              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;"
-                <!-- Header with Trizen Logo -->
-                <tr>
-                  <td style="padding: 60px 40px; text-align: center; border-radius: 12px 12px 0 0; background: linear-gradient(135deg, #2E1F5C 0%, #1a0f3a 100%); -webkit-user-select: none; -moz-user-select: none; user-select: none; min-height: 200px; position: relative;">
-                    <!-- Trizen Logo Container -->
-                    <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.95); padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                      <img src="https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR" 
-                           alt="TRIZEN" 
-                           style="height: 60px; width: auto; max-width: 300px; display: block; margin: 0 auto;"
-                           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                      <!-- Fallback text if image fails -->
-                      <div style="display: none; color: #2E1F5C; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">TRIZEN</div>
-                    </div>
-                    <!-- Tagline -->
-                    <div style="margin-top: 20px; color: #ffffff; font-size: 16px; font-family: Arial, sans-serif; font-weight: 300; opacity: 0.9;">
-                      Innovation Community
-                    </div>
-                  </td>
-                </tr>
+              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;">
+                ${generateEmailHeader('New Contact Form Submission', data.subject)}
                 
                 <!-- Contact Form Details -->
                 <tr>
@@ -267,8 +253,8 @@ const templates = {
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
                           <p style="margin: 0; font-size: 16px; font-weight: bold; color: #333333; font-family: Arial, sans-serif;">Trizen Ventures</p>
                           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Email: <span style="background-color: #fff3cd; padding: 2px 6px; border-radius: 3px;">support@trizenventures.com</span></p>
-                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Website: <a href="https://trizenventures.com" style="color: #2563eb; text-decoration: none;">https://trizenventures.com</a></p>
-                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #2563eb; text-decoration: none;">Follow us on LinkedIn</a></p>
+                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Website: <a href="https://trizenventures.com" style="color: #372f87; text-decoration: none;">https://trizenventures.com</a></p>
+                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #372f87; text-decoration: none;">Follow us on LinkedIn</a></p>
                         </td>
                       </tr>
                     </table>
@@ -299,25 +285,8 @@ const templates = {
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8fafc;">
           <tr>
             <td align="center" style="padding: 40px 20px;">
-              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;"
-                <!-- Header with Trizen Logo -->
-                <tr>
-                  <td style="padding: 60px 40px; text-align: center; border-radius: 12px 12px 0 0; background: linear-gradient(135deg, #2E1F5C 0%, #1a0f3a 100%); -webkit-user-select: none; -moz-user-select: none; user-select: none; min-height: 200px; position: relative;">
-                    <!-- Trizen Logo Container -->
-                    <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.95); padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                      <img src="https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR" 
-                           alt="TRIZEN" 
-                           style="height: 60px; width: auto; max-width: 300px; display: block; margin: 0 auto;"
-                           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                      <!-- Fallback text if image fails -->
-                      <div style="display: none; color: #2E1F5C; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">TRIZEN</div>
-                    </div>
-                    <!-- Tagline -->
-                    <div style="margin-top: 20px; color: #ffffff; font-size: 16px; font-family: Arial, sans-serif; font-weight: 300; opacity: 0.9;">
-                      Innovation Community
-                    </div>
-                  </td>
-                </tr>
+              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;">
+                ${generateEmailHeader('Thank You for Contacting Us!', 'We\'ll get back to you soon')}
                 
                 <!-- Thank You Message -->
                 <tr>
@@ -343,8 +312,8 @@ const templates = {
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
                           <p style="margin: 0; font-size: 16px; font-weight: bold; color: #333333; font-family: Arial, sans-serif;">Trizen Ventures</p>
                           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Email: <span style="background-color: #fff3cd; padding: 2px 6px; border-radius: 3px;">support@trizenventures.com</span></p>
-                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Website: <a href="https://trizenventures.com" style="color: #2563eb; text-decoration: none;">https://trizenventures.com</a></p>
-                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #2563eb; text-decoration: none;">Follow us on LinkedIn</a></p>
+                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Website: <a href="https://trizenventures.com" style="color: #372f87; text-decoration: none;">https://trizenventures.com</a></p>
+                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #372f87; text-decoration: none;">Follow us on LinkedIn</a></p>
                         </td>
                       </tr>
                     </table>
@@ -375,25 +344,8 @@ const templates = {
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8fafc;">
           <tr>
             <td align="center" style="padding: 40px 20px;">
-              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;"
-                <!-- Header with Trizen Logo -->
-                <tr>
-                  <td style="padding: 60px 40px; text-align: center; border-radius: 12px 12px 0 0; background: linear-gradient(135deg, #2E1F5C 0%, #1a0f3a 100%); -webkit-user-select: none; -moz-user-select: none; user-select: none; min-height: 200px; position: relative;">
-                    <!-- Trizen Logo Container -->
-                    <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.95); padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                      <img src="https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR" 
-                           alt="TRIZEN" 
-                           style="height: 60px; width: auto; max-width: 300px; display: block; margin: 0 auto;"
-                           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                      <!-- Fallback text if image fails -->
-                      <div style="display: none; color: #2E1F5C; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">TRIZEN</div>
-                    </div>
-                    <!-- Tagline -->
-                    <div style="margin-top: 20px; color: #ffffff; font-size: 16px; font-family: Arial, sans-serif; font-weight: 300; opacity: 0.9;">
-                      Innovation Community
-                    </div>
-                  </td>
-                </tr>
+              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;">
+                ${generateEmailHeader('Speaker Application Received!', 'We\'ll review your application soon')}
                 
                 <!-- Application Confirmation -->
                 <tr>
@@ -419,8 +371,8 @@ const templates = {
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
                           <p style="margin: 0; font-size: 16px; font-weight: bold; color: #333333; font-family: Arial, sans-serif;">Trizen Ventures</p>
                           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Email: <span style="background-color: #fff3cd; padding: 2px 6px; border-radius: 3px;">support@trizenventures.com</span></p>
-                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Website: <a href="https://trizenventures.com" style="color: #2563eb; text-decoration: none;">https://trizenventures.com</a></p>
-                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #2563eb; text-decoration: none;">Follow us on LinkedIn</a></p>
+                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Website: <a href="https://trizenventures.com" style="color: #372f87; text-decoration: none;">https://trizenventures.com</a></p>
+                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #372f87; text-decoration: none;">Follow us on LinkedIn</a></p>
                         </td>
                       </tr>
                     </table>
@@ -451,25 +403,8 @@ const templates = {
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8fafc;">
           <tr>
             <td align="center" style="padding: 40px 20px;">
-              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;"
-                <!-- Header with Trizen Logo -->
-                <tr>
-                  <td style="padding: 60px 40px; text-align: center; border-radius: 12px 12px 0 0; background: linear-gradient(135deg, #2E1F5C 0%, #1a0f3a 100%); -webkit-user-select: none; -moz-user-select: none; user-select: none; min-height: 200px; position: relative;">
-                    <!-- Trizen Logo Container -->
-                    <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.95); padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                      <img src="https://drive.google.com/uc?export=view&id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR" 
-                           alt="TRIZEN" 
-                           style="height: 60px; width: auto; max-width: 300px; display: block; margin: 0 auto;"
-                           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                      <!-- Fallback text if image fails -->
-                      <div style="display: none; color: #2E1F5C; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; letter-spacing: 2px;">TRIZEN</div>
-                    </div>
-                    <!-- Tagline -->
-                    <div style="margin-top: 20px; color: #ffffff; font-size: 16px; font-family: Arial, sans-serif; font-weight: 300; opacity: 0.9;">
-                      Innovation Community
-                    </div>
-                  </td>
-                </tr>
+              <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;">
+                ${generateEmailHeader('New Speaker Application', `From ${data.name}`)}
                 
                 <!-- New Application Notification -->
                 <tr>
@@ -518,8 +453,8 @@ const templates = {
                         <td align="center" style="padding: 15px; background-color: #ffffff; border-radius: 8px; margin-bottom: 15px;">
                           <p style="margin: 0; font-size: 16px; font-weight: bold; color: #333333; font-family: Arial, sans-serif;">Trizen Ventures</p>
                           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Email: <span style="background-color: #fff3cd; padding: 2px 6px; border-radius: 3px;">support@trizenventures.com</span></p>
-                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Website: <a href="https://trizenventures.com" style="color: #2563eb; text-decoration: none;">https://trizenventures.com</a></p>
-                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #2563eb; text-decoration: none;">Follow us on LinkedIn</a></p>
+                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">Website: <a href="https://trizenventures.com" style="color: #372f87; text-decoration: none;">https://trizenventures.com</a></p>
+                          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666666; font-family: Arial, sans-serif;">LinkedIn: <a href="https://linkedin.com/company/trizenventures" style="color: #372f87; text-decoration: none;">Follow us on LinkedIn</a></p>
                         </td>
                       </tr>
                     </table>
@@ -554,26 +489,12 @@ const templates = {
           <tr>
             <td align="center" style="padding: 40px 20px;">
               <table width="900" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); max-width: 900px;">
-                <!-- Header with Trizen Logo -->
-                <tr>
-                  <td style="padding: 0; text-align: center; background: #ffffff; -webkit-user-select: none; -moz-user-select: none; user-select: none;">
-                    <div style="padding: 40px; max-width: 600px; margin: 0 auto;">
-                      <img src="https://drive.google.com/thumbnail?id=1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR&sz=w500" 
-                        alt="TRIZEN" 
-                        style="height: auto; width: 100%; max-width: 450px; display: block; margin: 0 auto;"
-                        onerror="this.src='https://lh3.googleusercontent.com/d/1WSn_2v5WJAuMOOrLU1Lsalw4zizdO3VR'; this.onerror=null;">
-                    </div>
-                  </td>
-                </tr>
-                
-                <!-- Title Banner -->
-                <tr>
-                  <td style="background-color: ${data.type === 'password_reset' ? '#dc2626' : '#2563eb'}; padding: 20px; text-align: center;">
-                    <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: bold; font-family: Arial, sans-serif;">
-                      ${data.type === 'password_reset' ? 'Password Reset Request' : 'Verify Your Email'}
-                    </h1>
-                  </td>
-                </tr>
+                ${generateEmailHeader(
+                  data.type === 'password_reset' ? 'Password Reset Request' : 'Verify Your Email',
+                  data.type === 'password_reset' 
+                    ? 'Use the code below to reset your password' 
+                    : 'Welcome to Trizen Community!'
+                )}
                 
                 <!-- Content -->
                 <tr>
@@ -591,7 +512,7 @@ const templates = {
                     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 30px 0;">
                       <tr>
                         <td align="center">
-                          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 12px; display: inline-block;">
+                          <div style="background: linear-gradient(135deg, #372f87 0%, #4c3fa3 100%); padding: 30px; border-radius: 12px; display: inline-block;">
                             <p style="margin: 0 0 10px 0; color: #ffffff; font-size: 14px; font-family: Arial, sans-serif; text-transform: uppercase; letter-spacing: 1px;">
                               Your Verification Code
                             </p>
@@ -613,10 +534,10 @@ const templates = {
                         </p>`
         : ''}
                     
-                    <div style="background-color: #f8f9fa; padding: 20px; border-left: 4px solid #2563eb; border-radius: 4px; margin: 30px 0;">
+                    <div style="background-color: #f8f9fa; padding: 20px; border-left: 4px solid #372f87; border-radius: 4px; margin: 30px 0;">
                       <p style="margin: 0; color: #666666; font-size: 14px; font-family: Arial, sans-serif;">
                         <strong>Need help?</strong> Contact us at 
-                        <a href="mailto:support@trizenventures.com" style="color: #2563eb; text-decoration: none;">support@trizenventures.com</a>
+                        <a href="mailto:support@trizenventures.com" style="color: #372f87; text-decoration: none;">support@trizenventures.com</a>
                       </p>
                     </div>
                   </td>
